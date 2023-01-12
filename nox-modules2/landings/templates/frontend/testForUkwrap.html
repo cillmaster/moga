@@ -1,0 +1,164 @@
+<div class="pre-content lp-bg-fiolet">
+    <div class="container_12 lp-pre-content">
+        <div class="grid_6 grid_first">
+            <h1>Get car vector templates</h1>
+            <div class="lp-caption">
+                Browse ready blueprints of vehicles for<br> wrapping, ads design and fleet branding
+            </div>
+            <div class="lp-btn-area">
+                {if noxSystem::authorization()}
+                <a class="btn btn-red" href="/users/downloads">Get Started Today</a><br>
+                {else}
+                <a class="btn btn-red js-popup"data-wid="registration" href="/users/login">Get Started Today</a><br>
+                {end}
+                <span class="lp-btn-title">and get access to 1000+ editable templates</span>
+            </div>
+        </div>
+        <div class="grid_1">&nbsp;</div>
+        <div class="grid_5">
+                <img class="lp-img-teaser" src="/nox-themes/lp/wrap-uk/images/c1.png" width="362" height="349" alt="">
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 64px">
+    <div class="container_12">
+        <div class="hr"></div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container_12 lp-actions">
+        <div class="grid_4 grid_first">
+            <h3><img src="/nox-themes/lp/wrap-uk/images/search_button.png" width="16" height="16" alt=""> <span>Find blueprints</span></h3>
+            <p>Select from different makes, models, bodies and variants or try quick search button below. </p>
+        </div>
+        <div class="grid_4">
+            <h3><img src="/nox-themes/lp/wrap-uk/images/request-red-icon.png" width="16" height="16" alt=""> Request blueprints</h3>
+            <p>If you need specific blueprint, just request it and get in a few days!</p>
+        </div>
+        <div class="grid_4">
+            <h3><img src="/nox-themes/lp/wrap-uk/images/request-red-icon.png" width="16" height="16" alt=""> Save your time and money</h3>
+            <p>Our ready-to-use templates are affordable. Join today and save up to 10 hrs per each car design job. </p>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="container_12">
+        <div class="hr"></div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container_12">
+        <div class="grid_12 grid_first text-center">
+            <h3>Commercial fleet</h3>
+            <p>Branding-ready Panel vans, LCV, Luton Loaders, Boxed vans, Cargo etc.<br>Delivery and logistics companies.</p>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        {foreach $l1 as $i=>$id}
+        {eval $v = @$vectors[$id]}
+        <div class="grid_3{if !$i} grid_first{end}">
+            {printsVectorModel::viewVectorPreview($v)}
+        </div>
+        {end}
+    </div>
+</div>
+
+<div class="content">
+    <div class="container_12">
+        <div class="grid_6 grid_first text-center">
+            <h3>Passenger carriers</h3>
+            <p>Minibuses, Minivans, wagons, coaches. Cabs and taxis.<br>Public transport advertisement, buses etc.</p>
+        </div>
+        <div class="grid_6 text-center">
+            <h3>Corporate fleet</h3>
+            <p>Passenger cars. Business vehicles, staff carriers, sedans.<br>Leasing companies etc.</p>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        {foreach $l2 as $i=>$id}
+        {eval $v = $vectors[$id]}
+        <div class="grid_3{if !$i} grid_first{end}">
+            {printsVectorModel::viewVectorPreview($v)}
+        </div>
+        {end}
+    </div>
+</div>
+
+<div class="content">
+    <div class="container_12 lp-search">
+        <div class="lp-btn-area">
+            <form method="get" action="/search" class="search_header">
+                <input id="lp_search" class="input" placeholder="Search for blueprints" name="q" title="Type part of name to find blueprints. Enter 3 or more characters. Try to use general words, do not use too much or too specific words.">
+                <input class="icon" value="" type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container_12">
+        <div class="hr"></div>
+    </div>
+</div>
+<div class="content lp-dsc">
+    <div class="container_12">
+        <div class="grid_6 grid_first text-center">
+            <h3>Design-ready vectors</h3>
+            <p>We provide editable PDF vector files and Adobe Illustrator AI<br>
+                with shapes and layers. You have to open file and start designing.<br>
+                Also we include: EPS, DWG, DXF and SVG.</p>
+        </div>
+        <div class="grid_6 text-center">
+            <h3>Local market models and wide range</h3>
+            <p>We offer exclusive blueprints of specific local models, such as Vauxhall,<br>
+                LDV, Lloyd, Austin, Metrocab, Double-Decker available on UK market.<br>
+                Each model has versions such as: SWB, LWB, Facelifted etc.</p>
+        </div>
+    </div>
+    <div class="container_12">
+        <div class="grid_6 grid_first text-center">
+            <h3>Get Requested file in few hours</h3>
+            <p>Sign up as a branding/wrapping company and get priority - all your<br>
+                requests will be made faster. Register from this page to get Priority and <br>
+                start taking blueprints as soon as possible.</p>
+        </div>
+        <div class="grid_6 text-center">
+            <h3>Buy 1 or 100 blueprints with one click</h3>
+            <p>Choose files one-by-one or get 100-in-1 set package for cargo vans,<br>
+                passenger carriers or passenger cars. We have already chosen the <br>
+                most useful models for each category.</p>
+        </div>
+    </div>
+</div>
+
+<div class="content lp-bg-fiolet" style="padding: 0">
+    <div class="container_12 lp-vi text-center lp-bg-fiolet radial">
+        <div style="padding-bottom: 40px">
+            <img src="/nox-themes/lp/wrap-uk/images/outlines-regaly.png" width="123" height="117" alt="">
+        </div>
+        <h2>Branding companies’ choise</h2>
+        <div class="lp-vi-desc">Major branding companies already use<br> Outlines as a standard.</div>
+        <div class="lp-btn-area">
+            {if noxSystem::authorization()}
+            <a class="btn btn-red" href="/users/downloads">Join Today</a><br>
+            {else}
+            <a class="btn btn-red js-popup" data-wid="registration" href="/users/login">Join Today</a><br>
+            {end}
+            <span class="btn-title">and try all advantages</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="content">
+    <div style="margin: 0 auto; text-align: center">
+        <div class="fb-like-box" data-href="https://www.facebook.com/getoutlines" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false" data-width="335"></div>
+    </div>
+</div>

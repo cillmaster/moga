@@ -1,0 +1,37 @@
+<a href="?section=administrator&action=add" class="inline-block add" title="Добавить"></a>
+
+<table class="hover">
+    <thead>
+    <tr>
+        <th class="w100">Дата</th>
+        <th class="w100">URL</th>
+        <th>Файл</th>
+        <th>Переходов по ссылке</th>
+        <th class="w16">Активность</th>
+        <th class="w100">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+    <tr>
+        <td class="text-center">{noxDate::toDate($ar[date])}</td>
+
+        <td><a href="{$baseUrl}/link/{$ar[url]}" class="extlink">{$baseUrl}/link/{$ar[url]}</a></td>
+
+        <td><a href="?section=administrator&action=edit&id={$ar[id]}" class="bold">{htmlspecialchars($ar[filename])}</a></td>
+
+        <td class="text-center bold">{$ar[downloads]}</td>
+
+        <td class="text-center"><a href="?section=administrator&action=edit&id={$ar[id]}" class="inline-block enabled {if $ar[enabled]}on{else}off{end}"></a></td>
+
+        <td>
+            <a href="?section=administrator&action=edit&id={$ar[id]}" class="inline-block edit" title="Редактировать"></a>
+            <a href="?section=administrator&action=delete&id={$ar[id]}" class="inline-block delete" title="Удалить"></a>
+            <a href="?section=administrator&action=add&id={$ar[id]}" class="inline-block copy" title="Копировать"></a>
+        </td>
+    </tr>
+    {end}
+    </tbody>
+</table>
+
+<a href="?section=administrator&action=add" class="inline-block add" title="Добавить"></a>

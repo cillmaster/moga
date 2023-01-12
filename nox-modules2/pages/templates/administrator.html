@@ -1,0 +1,32 @@
+<table class="ruler" id="pages-list">
+    <thead>
+    <tr>
+        <th class="w250">Название</th>
+        <th class="w300">URL</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th colspan="3"><a href="?section=administrator&action=add" class="add inline-block w100p"></a></th>
+    </tr>
+    </tfoot>
+    <tbody>
+    {foreach $pages as $key=>$page}
+    <tr>
+        <td><a href="?section=administrator&action=edit&id={$page[id]}" title="Редактировать страницу">{$page[caption]}</a>
+        </td>
+
+        <td><a href="{$page[url]}" class="inline-block extlink italic block-gray" title="Перейти на сайт">{$page[url]}</a>
+        </td>
+        <td>
+            <a href="?section=administrator&action=edit&id={$page[id]}" class="inline-block edit" title="Редактировать страницу"></a>
+            <a href="?section=administrator&action=publish&id={$page[id]}"
+               class="inline-block publish {if $page[published]}on{else}off{end}" title="Скрыть/Опубликовать"></a>
+            <a href="?section=administrator&action=delete&id={$page[id]}" class="inline-block delete" title="Удалить страницу"></a>
+            <a href="?section=administrator&action=add&id={$page[id]}" class="inline-block copy" title="Копировать страницу"></a>
+        </td>
+    </tr>
+    {end}
+    </tbody>
+</table>
