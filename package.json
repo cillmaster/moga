@@ -1,0 +1,32 @@
+{
+  "name": "getoutlines",
+  "version": "0.8.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://root@62.76.178.26/var/www/ilya/data/www/getoutlines.git"
+  },
+  "author": "Andrey Belov <pa-nic@yandex.ru>, Andrey Kovchugo<admin@jscript.pro>",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0-beta.2",
+    "gulp-concat": "=2.6.0",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-less": "=3.3.0",
+    "gulp-typescript": "=2.13.5",
+    "gulp-uglify-es": "^1.0.4",
+    "gulp-rename": "^1.2.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.3"
+  }
+}
