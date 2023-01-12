@@ -1,0 +1,22 @@
+<div style="font: 11pt Tahoma, Verdana, Segoe, sans-serif; padding: 32px; background-color: #eee; text-align: center;">
+    <div style="padding: 32px; max-width: 600px; background-color: #f7f7f7;">
+        <img src="https://getoutlines.com/nox-themes/default/images/outlines-logo.png"
+             width="130" height="23" style="margin-bottom: 32px;">
+        <div>Hi{if isset($name)}, {$name}{end}</div>
+        <div>We’ve received a request to reset your password.</div>
+        <div style="background-color: #fff; padding: 32px 16px; margin: 32px 0;">
+            <div style="font-weight: bold;">
+                <img src="https://getoutlines.com/nox-themes/default/images/confirm-email-icon.png"
+                     width="16" height="16">
+                Follow this link to reset your password:</div>
+            <div style="color: #4285f4;"><a href="{$confirmLink}">{$confirmLink}</a></div>
+        </div>
+        <div>If you didn’t make this request, you can ignore this email.</div>
+        <br>
+        <div>Thanks, Outlines Team</div>
+        <br>
+        <div style="font-size: 9pt; color: #a4a4a4;">
+            <div>© 2006 - <?=date('Y')?> Outlines. All rights reserved.</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div style="font: 11pt Tahoma, Verdana, Segoe, sans-serif; padding: 32px; background-color: #eee; text-align: center;">
+    <div style="padding: 32px; max-width: 600px; background-color: #f7f7f7;">
+        <img src="https://getoutlines.com/nox-themes/default/images/outlines-logo.png"
+             width="130" height="23" style="margin-bottom: 32px;">
+        <div>Hi{if isset($name)}, {$name}{end}</div>
+        <div>You are so close get started on Outlines.</div>
+        <div style="background-color: #fff; padding: 32px 16px; margin: 32px 0;">
+            <div style="font-weight: bold;">
+                <img src="https://getoutlines.com/nox-themes/default/images/confirm-email-icon.png"
+                     width="16" height="16">
+                Follow the link to activate your account:</div>
+            <div style="color: #4285f4;"><a href="{$confirmLink}">{$confirmLink}</a></div>
+        </div>
+        <div>
+            Why confirming your email is important? For starters, we need to make sure you are a real person.
+            Clicking the link you accept to receive some email notifications from us, such as your order,
+            payment and request status or to get your ordered blueprints via email.
+        </div>
+        <br>
+        <div>Thanks, Outlines Team</div>
+        <br>
+        <div style="font-size: 9pt; color: #a4a4a4;">
+            <div>© 2006 - <?=date('Y')?> Outlines. All rights reserved.</div>
+            <br>
+            <div>
+                If you can't follow the link, just copy and paste this URL into a web browser.
+            </div>
+            <div>
+                By following confirmation link you accept our
+                <a href="https://getoutlines.com/terms-of-service">Terms of Service</a>
+                and <a href="https://getoutlines.com/privacy-policy">Privacy Policy</a>.
+            </div>
+            <div>
+                This message was sent to {$email} from Outlines. Outlines sends emails like this for personal
+                notifications of users. To unsubscribe from all Outlines emails, click
+                <a href="{$confirmLink}&u=true">here</a>.
+            </div>
+        </div>
+    </div>
+</div>

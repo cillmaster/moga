@@ -1,0 +1,27 @@
+{if $pages > 1}
+    <div class="pages-wrap">
+        <div class="pages-cont">
+            {foreach $res as $ar}{if $ar[type] == 'link'}{$ar[link]}{end}{if $ar[type] == 'delimiter'}<span class="page">...</span>{end}{if $ar[type] == 'active'}<span class="page active">{$ar[val]}</span>{end}{end}
+        </div>
+        <div class="page-prev">
+            {if isset($prev)}
+            <a href="{$prev[href]}" title="{$prev[title]}">
+                <span class="page">&lt;</span>
+            </a>
+            {else}
+            <span class="page">&lt;</span>
+            {end}
+        </div>
+        <div class="page-next">
+            {if isset($next)}
+            <a href="{$next[href]}" title="{$next[title]}">
+                <span class="page">&gt;</span>
+            </a>
+            {else}
+            <span class="page">&gt;</span>
+            {end}
+        </div>
+    </div>
+{else}
+<br>
+{end}
