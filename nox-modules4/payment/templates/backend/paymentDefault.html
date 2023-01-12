@@ -1,0 +1,74 @@
+<div></div>
+{$pager}
+<style>
+    .payment-price[data-id]{
+        cursor: pointer;
+    }
+    tr[data-status="refund"] span{
+        color: #c1c1c1;
+    }
+    tr[data-status="refund"] .payment-price{
+        text-decoration: line-through;
+    }
+</style>
+<table id="table">
+    <thead>
+        <tr>
+            <th>Дата покупки</th>
+            <th>Покупка</th>
+            <th>Цена</th>
+            <th>Пользователь</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $res as $ar}
+        <? $user = @$users[$ar['user_id']]; ?>
+        <tr data-status="{$ar[status]}">
+            <td>{noxDate::toDateTime($ar[datetime])}</td>
+            <td>
+                {$ar[option]}
+                <span class="{if $ar[purchase_type] == 'prepay'}{if $ar[prepay]}red{else}orange{end}{end}">{$ar[purchase_name]}</span>
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=view&id={$vectors[$ar[purchase_id]][id]}" target="_blank">view</a>
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=edit&id={$vectors[$ar[purchase_id]][id]}">edit</a>
+            </td>
+            <td  data-id="{if $ar[purchase_type] == 'prepay'}{$ar[id]}{end}" class="payment-price">{$ar[price]}$</td>
+            <td>
+                <a href="/administrator/users?section=administrator&action=profile&id={$ar[user_id]}" target="_blank">User</a>
+                &nbsp;&nbsp;{$ar[user_id]}&nbsp;&nbsp;
+                {if $user[user_type] === 'facebook'}
+                    <a href="mailto:{$user[email]}?subject={$vectors[$ar[purchase_id]][full_name]} vector blueprints{if $user[name]} for {$user[name]}{end}"
+                   target="_blank" title="{$user[email]} <{$user[name]}>">email</a>
+                    <a href="https://facebook.com/{$user[login]}" target="_blank" title="{$user[email]} <{$user[name]}>">fb</a>
+                {elseif $user[user_type] === 'google'}
+                    <a href="mailto:{$user[email]}?subject={$vectors[$ar[purchase_id]][full_name]} vector blueprints{if $user[name]} for {$user[name]}{end}"
+                       target="_blank" title="{$user[email]} <{$user[name]}>">email</a>
+                {else}
+                    <a href="mailto:{$user[email]}?subject={$vectors[$ar[purchase_id]][full_name]} vector blueprints{if $user[name]} for {$user[name]}{end}"
+                       target="_blank" title="{$user[email]} <{$user[name]}>">email</a>
+                {end}
+            </td>
+        </tr>
+        {end}
+    </tbody>
+</table>
+{$pager}
+<script>
+    'use strict';
+    var table = document.getElementById('table');
+    table.addEventListener('click', function (e) {
+        var target = e.target,
+            id = target.getAttribute('data-id'),
+            parent, status;
+        if(id && (parent = target.parentNode)){
+            status = parent.getAttribute('data-status') === 'approved' ? 'refund' : 'approved';
+            upData(
+                'GET',
+                '/administrator/payment/?section=payment&action=refund&ajax&id=' + id + '&status=' + status,
+                null,
+                function () {
+                    parent.setAttribute('data-status', status);
+                }
+            );
+        }
+    });
+</script>

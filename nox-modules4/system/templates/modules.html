@@ -1,0 +1,30 @@
+<table class="ruler hover-row text-center w100p">
+    <thead>
+    <tr>
+        <th class="w350">Название</th>
+        <th>Описание</th>
+        <th class="w200">Псевдоним</th>
+        <th class="w250">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $modules as $module}
+    <tr
+    {if !$module[install]} class="new"{end}>
+    <td>{$module[title]} v.{$module[version]}{if $module[install]} <span title="Установленная версия"
+                                                                         class="small block-gray">({$module[installVersion]})</span>{end}<br/><span
+            class="block-gray very-small">{$module[author]}</span></td>
+    <td class="text-left small">{$module[description]}</td>
+    <td>{$module[name]}</td>
+    <td>{if $module[install]}
+        <a href="?section=modules&action=install&module={$module[name]}" class="update inline-block">Обновить</a>
+        &nbsp;&nbsp;
+        <a href="?section=modules&action=delete&module={$module[name]}" class="delete inline-block not-ajax">Удалить</a>
+        {else}
+        <a href="?section=modules&action=install&module={$module[name]}" class="add bold inline-block w125">Установить</a>
+        {end}
+    </td>
+    </tr>
+    {end}
+    </tbody>
+</table>
