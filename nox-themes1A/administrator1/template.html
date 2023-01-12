@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="{$locale}">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex"/>
+    <title>{$title} - {$siteTitle}</title>
+    <link rel="stylesheet" type="text/css" href="{$commonFolder}/css/framework.css"/>
+    <link rel="stylesheet" type="text/css" href="{$themeFolder}/css/common.css"/>
+
+    <link rel="stylesheet" href="{$themeFolder}/js/elrte/css/smoothness/jquery-ui-1.8.13.custom.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="{$themeFolder}/js/elrte/css/elrte.min.css" type="text/css" media="screen" charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="{$themeFolder}/css/jquery.datepick.css"/>
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="{$commonFolder}/js/jquery.js"></script>
+    <script type="text/javascript" src="{$themeFolder}/js/jquery.datepick.min.js"></script>
+    <script type="text/javascript" src="{$commonFolder}/js/framework.js"></script>
+    <script type="text/javascript" src="{$themeFolder}/js/common.js"></script>
+    <script type="text/javascript" src="{$themeFolder}/js/table.js"></script>
+    <script type="text/javascript" src="{$themeFolder}/js/tree.js"></script>
+    <script type="text/javascript" src="{$themeFolder}/js/test.js"></script>
+
+    <script src="{$themeFolder}/js/elrte/js/jquery-ui-1.8.13.custom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{$themeFolder}/js/elrte/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{$themeFolder}/js/elrte/js/i18n/elrte.ru.js" type="text/javascript" charset="utf-8"></script>
+
+    {$head}
+</head>
+<body>
+<header>
+    <nav class="main-menu left">{$blocks[admin-menu]}</nav>
+    <nav class="main-menu right">
+        <ul>
+            <li><a href="{$baseUrl}/">На сайт</a></li>
+            <li><a href="{$baseUrl}/users/logout">Выйти</a></li>
+        </ul>
+    </nav>
+</header>
+<section>
+    <h2>{$caption}</h2>
+    {$content}
+</section>
+</body>
+</html>
