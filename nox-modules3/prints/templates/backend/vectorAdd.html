@@ -1,0 +1,253 @@
+{if $step === 2}
+<script type="text/javascript">
+    {if isset($makeUrls)}
+    var makeUrls = {json_encode($makeUrls)};
+    {end}
+    document.addEventListener('DOMContentLoaded', function () {
+        var payInp = document.getElementById('prepayInput'),
+            fileBl = document.getElementById('filesBlock'),
+            prvInp = document.getElementById('previewInput'),
+            arhInp = document.getElementById('arhivInput'),
+            makeSel = document.querySelector('.js-change-data-folder');
+        payInp.addEventListener('click', changePrepay);
+        prvInp.addEventListener('change', changePreview);
+        makeSel.addEventListener('change', changeMake);
+        changePrepay();
+        changeMake();
+        function changePrepay(e) {
+            var checked = payInp.checked;
+            payInp.value = checked ? 1 : 0;
+            fileBl.style.display = checked ? 'none' : 'block';
+            prvInp.value = checked ? '/vectors/prepay/Outlines-Prepayment-Preview.png' : (e ? '' : prvInp.value);
+            arhInp.value = checked ? '/vectors/prepay/Outlines-Prepayment-Success.pdf' : (e ? '' : arhInp.value);
+            changePreview();
+        }
+        function changePreview() {
+            var id = 'preview-id-' + prvInp.getAttribute('data-id'),
+                preview = document.getElementById(id);
+            if(!prvInp.value){
+                preview && preview.parentNode.removeChild(preview);
+            }else{
+                if(!preview){
+                    preview = document.createElement('img');
+                    preview.id = id;
+                    document.getElementById('preview-cont').appendChild(preview);
+                }
+                preview.src = 'https://getoutlines.com' + prvInp.value;
+            }
+        }
+        function changeMake(e) {
+            var dir = '/vectors/{$category[url]}/',
+                makeFolder = makeSel.value ? makeUrls[makeSel.value] : '',
+                prvDir = dir + (makeFolder ? (makeFolder + '/preview') : ''),
+                arhDir = dir + (makeFolder ? (makeFolder + '/store') : '');
+            e && (prvInp.value = arhInp.value = '');
+            prvInp.setAttribute('data-folder', prvDir);
+            arhInp.setAttribute('data-folder', arhDir);
+            changePreview();
+        }
+    });
+</script>
+<style>
+    fieldset input, fieldset select {
+        max-width: 180px;
+    }
+    .info {
+        color: #aa1111;
+        font-weight: 700;
+        padding-bottom: 16px;
+    }
+    .fake_email{
+        color: #aaa;
+    }
+</style>
+<form action="{$url}" method="POST">
+    {if isset($request)}
+        <div class="info">
+            Добавленный чертеж будет ассоциирован с запросом №{$request[id]}, название "{$request[full_name]}". <a target="_blanks" href="{Prints::createUrlForItem($request, Prints::REQUEST_VECTOR)}"> Просмотр запроса на сайте</a>
+        </div>
+        {if isset($users)}
+        <div>
+            <input type="checkbox" name="new[email]" checked>
+            <label>отправить pre-payment оповещение пользователям:</label>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    {if $admin}
+                    <th>Email</th>
+                    {end}
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Template</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $users as $ar}
+                <tr {if !$ar[real_email]}class="fake_email"{end}>
+                    <td>{$ar[id]}</td>
+                    <td>{$ar[name]}</td>
+                    {if $admin}
+                    <td>{$ar[email]}</td>
+                    {end}
+                    <td>{$ar[user_type]}</td>
+                    <td>{$ar[dt]}</td>
+                    <td>{$ar[tmp][fr]}</td>
+                </tr>
+                {end}
+                </tbody>
+            </table>
+        </div>
+        <br>
+        {end}
+    {end}
+    <table class="w100p valign-middle hover-disable">
+        <thead>
+        <tr>
+            <th class="text-center" width="25%">Превью</th>
+            <th class="text-left" width="75%">Данные</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="preview-cont">
+                {if isset($ar[preview])}
+                    <img src="https://getoutlines.com{$ar[preview]}" alt="" id="preview-id-{$ar[id]}">
+                {end}
+            </td>
+            <td>
+                {if isset($ar[full_name])}
+                    <h3>{$ar[full_name]}</h3>
+                {end}
+                <p>
+                    <label>Категория:</label>
+                    <span>
+                        <span class="bold">{$categories[$category[id]][name]}</span>
+                        (<a href="/administrator/prints/?section=vector&action=add">Сменить</a>)
+                    </span>
+                </p>
+                <fieldset class="">
+                    <legend>Параметры категории</legend>{$f}</fieldset>
+
+                <p>
+                    <label>Prepay:</label>
+                    <span>
+                        <input id="prepayInput" type="checkbox" name="new[prepay]" {if (isset($ar[prepay]) && $ar[prepay]) || $prepay_default} checked{end}>
+                    </span>
+                </p>
+                <div id="filesBlock">
+                    <p>
+                        <label>Превью:</label>
+                        <span>
+                            <input id="previewInput" type="text" name="new[preview]"  value="{if isset($ar[preview])}{htmlspecialchars($ar[preview])}{end}"
+                                   data-folder="/vectors/{$category[url]}/{if isset($make)}{$make[url]}/preview{end}" class="file-editor" data-id="{if isset($ar[id])}{$ar[id]}{end}">
+                        </span>
+                    </p>
+                    <p>
+                        <label>Архив:</label>
+                        <span>
+                            <input id="arhivInput" type="text" name="new[filename]"  value="{if isset($ar[filename])}{htmlspecialchars($ar[filename])}{end}"
+                                   data-folder="/vectors/{$category[url]}/{if isset($make)}{$make[url]}/store{end}" class="file-editor">
+                        </span>
+                    </p>
+                </div>
+
+                <p>
+                    <label>Title Name:</label>
+                    <span>
+                        <input type="text" name="new[name]"  value="{if isset($ar[name])}{htmlspecialchars($ar[name])}{elseif isset($request)}{$request[name]}{end}">
+                    </span>
+                </p>
+                <p>
+                    <label>Version Name:</label>
+                    <span>
+                        <input type="text" name="new[name_version]"  value="{if isset($ar[name_version])}{htmlspecialchars($ar[name_version])}{end}">
+                    </span>
+                </p>
+                <p>
+                    <label>Spec Name:</label>
+                    <span>
+                        <input type="text" name="new[name_spec]"  value="{if isset($ar[name_spec])}{htmlspecialchars($ar[name_spec])}{end}">
+                    </span>
+                </p>
+                <p>
+                    <label>Проекции:</label>
+                    <span>
+                        {if isset($ar[views])}
+                            {Views::getViewsForAdmin($ar[views])}
+                        {else}
+                            {Views::getViewsForAdmin(13)}
+                        {end}
+                    </span>
+                </p>
+
+
+                <p>
+                    <label>Цена:</label>
+                        <span>
+                            <input class="w50" type="text" name="new[price]"  value="{if isset($ar[price])}{$ar[price]}{else}23{end}"> $
+                        </span>
+                </p>
+                <p>
+                    <label>Масштаб:</label>
+                    <span>
+                        1:<input style="width: 50px" type="text" name="new[scale]" value="{if isset($ar[scale])}{$ar[scale]}{else}10{end}">
+                    </span>
+                </p>
+                <p>
+                    <label>Форматы:</label>
+                    <span>
+                        {foreach $exts as $ext}
+                        <label>{$ext}&nbsp;&nbsp;<input type="checkbox" name="new[ext][]" value="{$ext}" checked></label>
+                        {end}
+                    </span>
+                </p>
+
+                <p>
+                    <input type="submit" name="submit" value="{if isset($is_copy)}Копия{else}Сохранить{end}{if $admin} и вернуться к списку{end}"/>
+                    {if $admin}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="submit_with_view" value="{if isset($is_copy)}Копия{else}Сохранить{end} и показать ссылки"/>
+                    {end}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{else}
+<form method="get">
+    <table class="w100p valign-middle hover-disable">
+        <thead>
+        <tr>
+            <th class="text-center" width="25%">Превью</th>
+            <th class="text-left" width="75%">Данные</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                Выберите категорию
+                {eval $attrs = ['style' => 'width: 200px;']}
+                {noxForm::getSelect('category_id', false, $cats, '', '', $attrs)}
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td>
+                <button>Далее</button>
+                <input type="hidden" name="section" value="vector">
+                <input type="hidden" name="action" value="add">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{end}

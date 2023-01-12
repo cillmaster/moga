@@ -1,0 +1,43 @@
+{eval $get = $_GET}
+<div class="filter-panel">
+    <form method="get" action="{$url}">
+        <input type="hidden" name="section" value="models">
+        {if isset($makes)}
+        Марка:&nbsp;
+        <select class="js-change-send" name="filter[make_id]">
+            <option value="0">Выберите...</option>
+            {foreach $makes as $c}
+            <option value="{$c[id]}"{if $c[id] == $_GET[filter][make_id]} selected{end}>{$c[name]}</option>
+            {end}
+        </select>
+        {end}
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.js-change-send').on('change', function() {
+            this.form.submit();
+        });
+    });
+</script>
+{if $res}
+<table>
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>Items</th>
+            <th>Last added</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+        <tr>
+
+            <td>{$ar[name]}</td>
+            <td style="text-align: center;">{if $ar[total]>1}{$ar[total]}{end}</td>
+            <td>{$ar[last]}</td>
+        </tr>
+    {end}
+    </tbody>
+</table>
+{end}

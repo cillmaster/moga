@@ -1,0 +1,201 @@
+{eval $get = $_GET}
+<style>
+    #table select{
+        width: auto;
+    }
+    h2:empty{
+        display: none;
+    }
+    .status_in_td{
+        display: inline-block;
+        width: 105px;
+    }
+</style>
+<div class="filter-panel">
+    <form method="get" action="{$url}" name="main" class="inline-block">
+        <input type="hidden" name="section" value="request">
+        <input type="hidden" name="action" value="crm">
+        <input type="hidden" name="days" value="{$_GET[days]}">
+        <input type="hidden" name="search" value="{$_GET[search]}">
+        <input type="hidden" name="filter[category_id]" value="{@$_GET[filter][category_id]}">
+        {if isset($makes)}
+            <input type="hidden" name="filter[make_id]" value="{@$_GET[filter][make_id]}">
+        {end}
+        <input type="hidden" name="contact" value="{@$_GET['contact']}">
+        <input type="hidden" name="status" value="{@$_GET['status']}">
+        <input type="hidden" name="update_count" value="{@$_GET['update_count']}">
+        <input type="hidden" name="want_pay" value="{@$_GET['want_pay']}">
+    </form>
+    {if $is_filter}
+    <a href="?section=request&action=crm&status=1&update_count=1&days=90">сбросить фильтр</a>
+    {end}
+</div>
+{$pager}
+<table id="table">
+    <thead>
+        <tr>
+            {if isset($admin)}
+            <th>Vts</th>
+            {end}
+            <th>
+                Дата и время<br>
+                {eval $atr = ['data-type' => 'main', 'data-prm' => 'days']}
+                {noxForm::getSelect('days', @$_GET['days'], $days, '', 'Выбрать...', $atr)}
+            </th>
+            <th>ID</th>
+            <th>
+                Зап. чертеж<br>
+                <form name="search" class="inline-block">
+                    <input type="search" name="search" value="{$_GET[search]}" placeholder="Поиск">
+                </form>
+                <select data-type="main" data-prm="filter[category_id]">
+                    <option value="0">Выберите...</option>
+                    {foreach $categories as $c}
+                    <option value="{$c[id]}"{if $c[id] == $_GET[filter][category_id]} selected{end}>{$c[name]}</option>
+                    {end}
+                </select>
+                {if isset($makes)}
+                <select data-type="main" data-prm="filter[make_id]">
+                    <option value="0">Выберите...</option>
+                    {foreach $makes as $c}
+                    <option value="{$c[id]}"{if $c[id] == $_GET[filter][make_id]} selected{end}>{$c[name]}</option>
+                    {end}
+                </select>
+                {end}
+            </th>
+            {if isset($admin)}
+            <th>
+                Автор<br>
+                <select data-type="main" data-prm="contact">
+                    <option value="0"{if $_GET[contact] == 0} selected{end}>Все</option>
+                    <option value="1"{if $_GET[contact] == 1} selected{end}>Email</option>
+                    <option value="2"{if $_GET[contact] == 2} selected{end}>Facebook</option>
+                </select>
+            </th>
+            {end}
+            <th>
+                Статус<br>
+                {eval $atr = ['data-type' => 'main', 'data-prm' => 'status']}
+                {noxForm::getSelect('status', @$_GET['status'], Prints::$requestVoteTypes, '', 'Все', $atr)}
+                {eval $atr = ['data-type' => 'main', 'data-prm' => 'update_count']}
+                {noxForm::getSelect('update_count', @$_GET['update_count'], $update_count, '', '*', $atr)}
+            </th>
+            <th>
+                Prepay
+                {if isset($admin)}
+                <br>
+                {eval $atr = ['data-type' => 'main', 'data-prm' => 'want_pay']}
+                {noxForm::getSelect('want_pay', @$_GET['want_pay'], $want_pay, '', 'All', $atr)}
+                {end}
+            </th>
+            {if isset($admin)}
+            <th>Del</th>
+            {end}
+        </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+        <tr class="{$ar[class]}">
+            {if isset($admin)}
+            <td>{$ar[votes]}</td>
+            {end}
+            <td>{noxDate::toDateTime($ar[vote_datetime])}</td>
+            <td>{$ar[request_id]}</td>
+            <td>
+                {if $ar[name]}
+                {$ar[name]}
+                <a href="/administrator/prints/?section=vector&action=add&request_id={$ar[request_id]}" title="add vector">
+                    add vector
+                </a>&nbsp;
+                <a href="/administrator/prints/?section=vector&action=link&request_id={$ar[request_id]}" title="link vector">
+                    link to vector
+                </a>&nbsp;
+                <a href="/administrator/prints/?section=vector&action=cant&request_id={$ar[request_id]}" title="cant">
+                    cant
+                </a>
+                {end}
+            </td>
+            {if isset($admin)}
+            <td>
+                {if $ar[user]}
+                <a href="/administrator/users?section=administrator&action=profile&id={$ar[user_id]}" title="profile">
+                    {if $ar[user][user_type] === 'facebook'}
+                    Fb: {$ar[user][name]}
+                    {elseif $ar[user][user_type] === 'google'}
+                    G: {$ar[user][name]}
+                    {else}
+                    E: {if $ar[user][name]}{$ar[user][name]}{else}{substr($ar[user][email], 0, 28)}{end}
+                    {end}
+                </a>
+                {end}
+            </td>
+            {end}
+            <td class="no-wrap">
+                {eval $attrs = array('fix-value' => $ar[status])}
+                {noxForm::getSelect($ar[id], $ar[status], Prints::$requestVoteTypes, '', '', $attrs)}
+                [{$ar[update_count]}]
+            </td>
+            <td>
+                {if isset($admin)}
+                {if $ar[want_pay] == 1} PREPAY {elseif $ar[want_pay] == 0} Free {end}
+                {else}
+                Prepay
+                {end}
+            </td>
+            {if isset($admin)}
+            <td class="text-right">
+                <a href="?section=request&action=crm&delete={$ar[id]}" class="inline-block delete"></a>
+            </td>
+            {end}
+        </tr>
+    {end}
+    </tbody>
+</table>
+{$pager}
+<script>
+    var form = document.forms.main,
+        search = document.forms.search,
+        table = document.getElementById('table');
+    table.addEventListener('change', function (e) {
+        var target = e.target, id;
+        if(target.getAttribute('data-type') === 'main'){ //общий фильтр
+            form[target.getAttribute('data-prm')].value = target.value;
+            form.submit();
+        }else
+            changeStatus(target);
+    });
+    table.addEventListener('click', function (e) {
+        var target = e.target;
+        if(target.tagName !== 'A' || (!~target.href.indexOf('mailto:') && !~target.href.indexOf('https://facebook.com'))) return;
+        var status = target.parentNode.parentNode.querySelector('select');
+        status && changeStatus(status, 12);
+    });
+    search.addEventListener('submit', function (e) {
+        e.preventDefault();
+        form.search.value = search.search.value;
+        form.submit();
+    });
+    function changeStatus(select, to) {
+        var id = select.name;
+        if(!id) return;
+        if(to)
+            select.value = to;
+        select.setAttribute('disabled', 'true');
+        upData(
+            'GET',
+            '/administrator/prints/?section=request&action=crm&id=' + id + '&status=' + select.value,
+            null,
+            function () {
+                select.setAttribute('fix-value', select.value);
+                complete();
+            },
+            function () {
+                select.value = select.getAttribute('fix-value');
+                complete();
+            }
+        );
+        function complete() {
+            select.removeAttribute('disabled');
+        }
+    }
+</script>

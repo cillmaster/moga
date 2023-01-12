@@ -1,0 +1,128 @@
+<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_9 grid_first">
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+                {foreach $breadcrumbs as $index=>$crumb}
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <a itemprop="item" href="{$crumb[url]}" title="{$crumb[title]}" class="crumb"><span itemprop="name">{$crumb[name]}</span></a>
+                    <meta itemprop="position" content="{$index+1}" />
+                </li>
+                {end}
+            </ol>
+            <div class="caption">
+                <h1 class="inline-block">{$caption}</h1>
+                {if $subCategory}
+                <a class="small color-cyan"
+                   href="/{$category[url]}-blueprints/{$subCategory[url]}">All {$subCategory[name]} blueprints</a>
+                {end}
+            </div>
+        </div>
+        <div class="grid_3"></div>
+    </div>
+</div>
+<div class="content bg-grey">
+    <div class="container_12">
+        <div class="grid_6 grid_first">
+            <div class="block">
+                <div class="block-content relative">
+                    <img class="w100p" src="{$print[filename]}" alt="{$mn} blueprints" title="{$mn} templates views">
+                </div>
+                <div class="print-like-cont">
+                    <div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+                    <div>
+                        <a href="{$print[filename]}" target="_blank" class="a30" title="{$caption}">
+                            <img src="/nox-themes/default/images/img-source.png" width="16" height="16" alt="Image source"> Image
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="print_likes">
+                <div class="fb-share-button" data-layout="button"></div>
+                <a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" rel="nofollow">
+                    <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" alt="pinterest">
+                </a>
+            </div>
+        </div>
+        <div class="grid_3">
+            <h3>Get free access:</h3>
+            <p>Get this raster image</p>
+            <p>
+                <!--noindex-->
+                <a class="btn hover blueprints-download-button" href="/download/blueprint/{$print[id]}">
+                    <img src="/nox-themes/default/images/ui_icon-arrow.png" width="16" height="13" alt="Download">&nbsp;&nbsp;Download
+                </a>
+                <!--/noindex-->
+            </p>
+            <p>&nbsp;</p>
+            <p>Views: {Views::getViewsInHtml($print[views], true)}</p>
+            <p>License: <a href="http://creativecommons.org/licenses/by/4.0/" rel="nofollow" target="_blank">Creative Commons</a></p>
+            <p>Format: {$print[ext]}</p>
+            <p>Dimensions: {$print[resolution_width]} x {$print[resolution_height]}</p>
+            <p>&nbsp;</p>
+            <p>Hits: {$print[views_count]}</p>
+            <p>Downloads: {$print[downloads_count]}</p>
+        </div>
+        <div class="grid_3">
+            {if isset($relatedVector)}
+            <h3>Editable drawings:</h3>
+            {printsVectorModel::viewVectorPreview($relatedVector)}
+            {else}
+            <h3>Request drawings:</h3>
+            <p>Request exact model's editable drawings:</p>
+            <p>
+                <!--noindex-->
+                {if !noxSystem::authorization()}
+                <a class="btn hover js-popup" data-wid="reg_main" data-wprm="blueprint_force"
+                   data-action="blueprint_force|{$print[id]}" href="#">
+                    Request exact vector drawing</a>
+                {else}
+                <a class="btn hover" href="/requests/create/vector/from/blueprint/{$print[id]}">
+                    Request exact vector drawing</a>
+                {end}
+                <!--/noindex-->
+            </p>
+            <p>
+                or <a class="color-cyan" href="/requests">request drawings</a> of any other models
+            </p>
+            {end}
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <div class="hr"></div>
+        <h3 style="padding-bottom: 6px">Best drawings for you:</h3>
+        {eval $i = 0}
+        {foreach $relVectors as $v}
+        <div class="grid_3{if $i%4 === 0} grid_first{end}">
+            {eval $i++}
+            {printsVectorModel::viewVectorPreview($v)}
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        {end}
+    </div>
+</div>
+{if !noxSystem::authorization()}
+<script>
+    (function() {
+        $('.blueprints-download-button').on('click', function() {
+            var count = parseInt(cookie.get('blueprint_downloads_count')) || 0;
+            cookie.set('blueprint_downloads_count', count + 1, {
+                path: '/'
+            });
+            if(count === 1 || count > 5){
+                windows.open('reg_main', 'blueprint_download', $('.blueprints-download-button').attr('href'));
+            }
+            return false;
+        });
+    })();
+</script>
+{else}
+<script>
+    (function() {
+        if('?download-after-social' === window.location.search) {
+            window.location = $('.blueprints-download-button').attr('href');
+        }
+    })();
+</script>
+{end}

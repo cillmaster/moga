@@ -1,0 +1,50 @@
+<style>
+    fieldset input, fieldset select {
+        max-width: 180px;
+    }
+</style>
+<form action="{$url}" method="POST">
+    <table class="w100p valign-middle hover-disable">
+        <thead>
+        <tr>
+            <th class="text-center" width="25%">Превью</th>
+            <th class="text-left" width="75%">Данные</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="preview-cont">
+                {if isset($ar[preview])}
+                    <img src="{$ar[img_preview]}" alt="" id="preview-id-{$ar[id]}">
+                {end}
+            </td>
+            <td>
+                <h3 style="font-weight: normal;">{$title}</h3>
+                <p>
+                    Vector: <a href="{Prints::createUrlForItem($ar, Prints::VECTOR)}" target="_blank">{$ar[full_name]} blueprints</a><br/>
+                    ID: {$ar[id]}
+                </p>
+
+                <p>
+                    {if isset($ar[set])}
+                        Набор: <a href="{Prints::createUrlForItem($ar[set], Prints::SET_VECTOR)}" target="_blank">All {$ar[set][name]} blueprints</a>
+                    {end}
+                </p>
+                <br>
+                <br>
+                <p>
+                    <a href="/administrator/prints/?section=vector&action=edit&id={$ar[id]}">Edit</a>
+                </p>
+                <p>
+                    <a href="/administrator/tag?section=tag&action=vector&id={$ar[id]}">Tags</a>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
