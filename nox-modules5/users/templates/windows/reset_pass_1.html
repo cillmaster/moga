@@ -1,0 +1,33 @@
+<div class="window" id="js-window__reset_pass_1">
+    <div class="frame">
+        <div class="title">I forgot password
+            <span class="note">or <a class="js-popup" href="#" data-wid="auth">go back</a></span>
+        </div>
+        <div class="content">
+            <div class="note" style="margin-bottom: 16px;">Enter your email address to reset your password.</div>
+            <form method="post" action="/users/reset">
+                <div class="form-item">
+                    <input class="w100p" name="reset[email]"
+                           pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-‌​9-]+)*"
+                           placeholder="Email address*" required>
+                </div>
+                <div class="form-item form-item-submit text-center">
+                    <input class="btn violet" name="submit-auth" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="close"></div>
+</div>
+<script>
+    $('#js-window__reset_pass_1').find('form').ajaxForm(
+            function(res) {
+                windows.open('msg', res.message);
+            },
+            function(a) {
+                let x = JSON.parse(a.responseText);
+                console.log(a.responseText);
+                alert(x.error);
+            }
+    )
+</script>

@@ -1,0 +1,17 @@
+{if $auth}
+Здравствуйте, {if !empty($user[name])}
+{$user[name]}
+{if !empty($user[patronymic])}
+{' '.$user[patronymic]}
+{end}
+{else}
+{$user[login]}
+{end}! | <a href="/users/">Профиль</a> <a href="/users/logout" class="right small-button"><span>Выйти</span></a>
+{else}
+<form method="POST" action="/users/login">
+    Email: <input type="email" name="email" required="required"/>&nbsp; &nbsp;
+    Пароль: <input type="password" name="password" required="required"/>
+    <input type="submit" name="submit" value="Вход" class="small-button"/> |
+    <a href="/users/registration">Регистрация</a>
+</form>
+{end}

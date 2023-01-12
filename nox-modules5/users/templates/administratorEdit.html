@@ -1,0 +1,47 @@
+{if $ar['registration_status'] == 'wait_confirm'}
+<form action="{$url}" method="POST">
+    <input type="hidden" name="id" value="{$ar[id]}"/>
+    <p><span><input type="submit" name="confirm" value="Confirm email"/></span></p>
+</form>
+{end}
+<form action="{$url}" method="POST">
+    <input type="hidden" name="id" value="{$ar[id]}"/>
+
+    <p><span><input type="submit" name="save" value="Сохранить"/></span></p>
+
+        <p><label>Логин:</label> <span><input type="text" title="Логин" placeholder="Логин" name="new[login]"
+                value="{$ar[login]}" required="required"/></span></p>
+
+        <p><label>Email:</label> <span><input type="text" title="Email" placeholder="Email" name="new[email]"
+                value="{$ar[email]}"/></span></p>
+
+        {if !$ar[id]}
+        <p><label>Пароль:</label> <span><input type="text" title="Пароль" placeholder="Пароль"
+                name="password" value="" required="required"/></span></p>
+        {else}
+        <p><label>Новый пароль:</label> <span><input type="text" title="Новый пароль" placeholder="Новый пароль"
+                name="password" value=""/></span></p>
+        {end}
+
+        <p><label>Имя:</label> <span><input type="text" title="Имя" placeholder="Имя" name="new[name]"
+                value="{$ar[name]}"/></span></p>
+
+    <fieldset class="fieldset-slide">
+        <legend>Группы</legend>
+
+        <p>Отметьте группы, в которых должен состоять пользователь.</p>
+        <ul class="tree">
+            {foreach $groups as $id=>$name}
+            <li>
+                <label>
+                    <input type="checkbox"
+                            name="groups[{$id}]"
+                            value="1" <?php if (isset($userGroups[$id])) echo 'checked="checked"'; ?>
+                    /> {$name}</label>
+            </li>
+            {end}
+        </ul>
+    </fieldset>
+
+    <p><span><input type="submit" name="save" value="Сохранить"/></span></p>
+</form>
