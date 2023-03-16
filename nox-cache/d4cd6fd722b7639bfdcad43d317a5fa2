@@ -1,0 +1,28 @@
+s:1148:"<?php if (@($pages > 1)) { ?>
+    <div class="pages-wrap">
+        <div class="pages-cont">
+            <?php if (isset($res) && $res) foreach ($res as $ar) {  if (@($ar['type'] == 'link')) {  echo @$ar['link'];  }  if (@($ar['type'] == 'delimiter')) { ?><span class="page">...</span><?php }  if (@($ar['type'] == 'active')) { ?><span class="page active"><?php echo @$ar['val']; ?></span><?php }  } ?>
+        </div>
+        <div class="page-prev">
+            <?php if (@(isset($prev))) { ?>
+            <a href="<?php echo @$prev['href']; ?>" title="<?php echo @$prev['title']; ?>">
+                <span class="page">&lt;</span>
+            </a>
+            <?php } else { ?>
+            <span class="page">&lt;</span>
+            <?php } ?>
+        </div>
+        <div class="page-next">
+            <?php if (@(isset($next))) { ?>
+            <a href="<?php echo @$next['href']; ?>" title="<?php echo @$next['title']; ?>">
+                <span class="page">&gt;</span>
+            </a>
+            <?php } else { ?>
+            <span class="page">&gt;</span>
+            <?php } ?>
+        </div>
+    </div>
+<?php } else { ?>
+<br>
+<?php } ?>
+";

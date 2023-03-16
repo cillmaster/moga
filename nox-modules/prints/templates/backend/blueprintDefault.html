@@ -1,0 +1,80 @@
+{eval $get = $_GET}
+<div class="filter-panel">
+    <form method="get" action="{$url}">
+        <input type="hidden" name="section" value="blueprint">
+        <input type="search" name="search" value="{$_GET[search]}" placeholder="Поиск">
+        <select class="js-change-send" name="filter[category_id]">
+            <option value="0">Выберите...</option>
+            {foreach $categories as $c}
+            <option value="{$c[id]}"{if $c[id] == $_GET[filter][category_id]} selected{end}>{$c[name]}</option>
+            {end}
+        </select>
+        {if isset($makes)}
+        <select class="js-change-send" name="filter[make_id]">
+            <option value="0">Выберите...</option>
+            {foreach $makes as $c}
+            <option value="{$c[id]}"{if $c[id] == $_GET[filter][make_id]} selected{end}>{$c[name]}</option>
+            {end}
+        </select>
+        {end}
+        <a href="?section=blueprint">показать все</a>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.js-change-send').on('change', function() {
+          $(this).parents('form').submit();
+        });
+        $('.js-relate2Vector').on('click', function() {
+            var a = this.href;
+            $('.js-relateSelector').each(function() {
+                if(this.checked) a += '&blueprint_id[]=' + this.value;
+            });
+            window.location = a;
+            return false;
+        });
+    });
+</script>
+{$pager}
+<div class="action-panel">
+    <a class="action-button" href="?section=blueprint&action=add{if $_GET[filter][category_id]>0}&category_id={$_GET[filter][category_id]}{end}{if $_GET[filter][make_id]>0}&make_id={$_GET[filter][make_id]}{end}">Добавить растр</a>
+    <a class="action-button" href="#">Удалить выделенные</a>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th class="w16">
+                <input class="js-checkAll" data-check-class="item" type="checkbox">
+            </th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Views</th>
+            <th>Лицензия</th>
+            <th>Item Tags</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+        <tr>
+            <td>
+                <input class="js-checkAll-item js-relateSelector" type="checkbox" name="check[{$ar[id]}]" value="{$ar[id]}">
+            </td>
+            <td>{$ar[id]}</td>
+            <td>{$ar[full_name]}</td>
+            <td>{Views::getViewsInHtml($ar[views])}</td>
+            <td>{$ar[copyright_type]}</td>
+            <td>
+                <a href="/administrator/tag?section=tag&action=blueprint&id={$ar[id]}">Edit Item tags</a>
+            </td>
+            <td class="no-wrap">
+                <a href="?section=blueprint&action=relate2Vector&blueprint_id={$ar[id]}">Привязать к вектору</a>
+                <a href="/administrator/prints/?section=blueprint&action=edit&id={$ar[id]}">Ред.</a>&nbsp;&nbsp;&nbsp;
+                <a class="confirm" href="/administrator/prints/?section=blueprint&action=delete&id={$ar[id]}">Удалить</a>&nbsp;&nbsp;&nbsp;
+                <a href="{Prints::createUrlForItem($ar, Prints::BLUEPRINT)}" target="_blank">На сайте</a>
+            </td>
+        </tr>
+    {end}
+    </tbody>
+</table>
+{$pager}

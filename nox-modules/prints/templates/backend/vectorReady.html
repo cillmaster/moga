@@ -1,0 +1,48 @@
+<style>
+    fieldset input, fieldset select {
+        max-width: 180px;
+    }
+    .info {
+        color: #aa1111;
+        font-weight: 700;
+        padding-bottom: 16px;
+    }
+    .fake_email{
+        color: #aaa;
+    }
+</style>
+<form action="{$url}" method="POST">
+    <div class="info">
+        Вектор ID {$vector[id]}, название "{$vector[full_name]}". <a target="_blanks" href="{Prints::createUrlForItem($vector, Prints::VECTOR)}"> Просмотр на сайте</a>
+    </div>
+    {if isset($users)}
+    <div>
+        <input type="checkbox" name="email" checked>
+        <label>отправить уведомление покупателям:</label>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $users as $ar}
+            <tr {if !$ar[real_email]}class="fake_email"{end}>
+                <td>{$ar[id]}</td>
+                <td>{$ar[name]}</td>
+                <td>{$ar[email]}</td>
+                <td>{$ar[user_type]}</td>
+            </tr>
+            {end}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    {end}
+    <p>
+        <input type="submit" name="submit" value="Выполнить"/>
+    </p>
+</form>

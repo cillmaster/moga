@@ -1,0 +1,19 @@
+<table>
+    <thead>
+        <tr>
+            <th>Название сета</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+        <tr>
+
+            <td>{$ar[name_full]}</td>
+            <td class="no-wrap">
+                <a href="/sets/{$ar[url]}-drawings" target="_blank">На сайте</a>
+            </td>
+        </tr>
+    {end}
+    </tbody>
+</table>

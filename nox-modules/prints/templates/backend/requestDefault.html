@@ -1,0 +1,154 @@
+{eval $get = $_GET}
+<div class="filter-panel">
+    <form method="get" action="{$url}" class="inline-block">
+        <input type="hidden" name="section" value="request">
+        <input type="search" name="search" value="{$_GET[search]}" placeholder="Поиск">
+
+        По статусу
+
+        {eval $atr = ['class' => 'js-change-send']}
+        {noxForm::getSelect('status', @$_GET['status'], Prints::$requestTypes, '', 'Все', $atr)}
+
+        Сортировать по:
+
+        <select class="js-change-send" name="order">
+            <option value="0">голосам</option>
+            <option value="1"{if $_GET[order] == 1} selected{end}>дате добавления</option>
+            <option value="2"{if $_GET[order] == 2} selected{end}>алфавиту</option>
+        </select>
+        <a href="?section=request">показать все</a>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.js-change-send').on('change', function() {
+          $(this).parents('form').submit();
+        });
+    });
+</script>
+{$pager}
+<div class="action-panel">
+    <a id="bind_vector" class="action-button" href="#">Привязать вектор</a>
+    <a class="action-button" href="#">Удалить выделенные</a>
+</div>
+<table id="table">
+    <thead>
+        <tr>
+            <th class="w16">
+                <input class="js-checkAll" data-check-class="item" type="checkbox">
+            </th>
+            <th>ID</th>
+            <th>Votes</th>
+            <th>Дата и время запроса</th>
+            <th>Полное название</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+        {if $ar[user_id]}
+        <? $user = $users[$ar['user_id']]; ?>
+        {end}
+        <tr class="{if $ar['user_id'] && noxSystem::$userControl->userInGroup(Users::businessGroupId, $ar['user_id'])}red{end}">
+            <td>
+                <input class="js-checkAll-item js-relateSelector" type="checkbox" name="check[{$ar[id]}]" value="{$ar[id]}">
+            </td>
+            <td>{$ar[id]}</td>
+            <td>{$ar[votes]}</td>
+            <td>{noxDate::toDateTime($ar[request_date])}</td>
+            <td>
+                <div>{$ar[full_name]}</div>
+                {if $ar[description]}
+                <div>
+                    <a href="/administrator/prints/?section=blueprint&action=edit&id=1{$ar[description]['blueprint_id']}"
+                       target="_blank">Original blueprint</a>
+
+                </div>
+                {end}
+            </td>
+            <td>
+                {eval $attrs = array('class' => 'js-request-status', 'data-id' => $ar[id])}
+                {noxForm::getSelect('', $ar[status], Prints::$requestTypes, '', ' ', $attrs)}
+            </td>
+
+            <td>
+                <!--<a href="/administrator/prints/?section=vector&action=add&category_id={$ar[category_id]}&request_id={$ar[id]}">Добавить вектор по запросу</a>-->
+                <a href="/administrator/prints/?section=request&action=edit&id={$ar[id]}">Ред.</a>
+                <a href="/administrator/prints/?section=request&action=link&id={$ar[id]}">Привязать вектор</a>
+                <a href="/administrator/prints/?section=request&action=delete&id={$ar[id]}">Удал.</a>
+                <a href="{Prints::createUrlForItem($ar, Prints::REQUEST_VECTOR)}" target="_blank">На сайте</a>
+            </td>
+        </tr>
+    {end}
+    </tbody>
+</table>
+{$pager}
+<script>
+    $(document).ready(function() {
+        $('.js-request-status').each(function() {
+            this.setAttribute('data-value', this.value);
+        });
+        $('.js-request-status').on('change', function() {
+            var that = this;
+            that.setAttribute('disabled', 'disabled');
+
+            $.ajax({
+                url: '/administrator/prints/?section=request&id=' + that.getAttribute('data-id') + '&status=' + that.value,
+                success: function() {
+                    that.setAttribute('data-value', this.value);
+                },
+                error: function() {
+                    that.value = that.getAttribute('data-value');
+                    alert('Connection error');
+                },
+                complete: function() {
+                    that.removeAttribute('disabled');
+                }
+            });
+        });
+        var bind = document.getElementById('bind_vector');
+        bind.addEventListener('click', function (e) {
+            e.preventDefault();
+            var tbl = document.getElementById('table'),
+                checkedArr = tbl.querySelectorAll('input[type="checkbox"]:checked'),
+                reqIdArr = [], i, vectorId, reqId, reqStatus, reqDataArr = [];
+            if(checkedArr.length){
+                for(i = 0; i < checkedArr.length; i++){
+                    reqId = checkedArr[i].getAttribute('value');
+                    reqStatus = tbl.querySelector('select[data-id=\'' + reqId + '\']');
+                    if(reqStatus && +reqStatus.value !== 12){
+                        reqIdArr.push(reqId);
+                        reqDataArr.push({
+                            checkbox: checkedArr[i],
+                            status: reqStatus
+                        });
+                    }else{
+                        checkedArr[i].checked = false;
+                    }
+                }
+                if(reqIdArr.length){
+                    if(+(vectorId = prompt('Specify the vector ID'))){
+                        upData('POST', '/administrator/prints/?section=request&action=link&id=' + reqIdArr.join('|') +
+                            '&vector_id=' + vectorId + '&ajax', null, function (data) {
+                                if(data === 'ok'){
+                                    for(i = 0; i < reqIdArr.length; i++){
+                                        reqDataArr[i].checkbox.checked = false;
+                                        reqDataArr[i].status.value = 12;
+                                        reqDataArr[i].status.setAttribute('data-value', 12);
+                                    }
+                                }
+                            }
+                        );
+                    }else{
+                        alert('Error! Incorrect vector ID!');
+                    }
+                }else{
+                    alert('Error! These requests already have vectors!')
+                }
+            }else
+                alert('Error! No requests selected!');
+        })
+    });
+</script>

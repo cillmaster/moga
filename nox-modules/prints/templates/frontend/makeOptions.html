@@ -1,0 +1,4 @@
+<option value="">Make</option>
+{foreach $res as $ar}
+    <option value="{$ar[id]}"{if $ar[id] == $selected} selected{end}>{$ar[name]}</option>
+{end}

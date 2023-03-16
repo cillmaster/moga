@@ -1,0 +1,82 @@
+<form method="POST" action="{$baseUrl}{$requestUrl}">
+    <p><input type="submit" name="save" value="Сохранить"/></p>
+    {function pagesAdminMenu($menu, $level)}
+    <ul class="tree {if $level>1}hidden{end}">
+        {foreach $menu as $ar}
+        <li>
+            <a href="#" class="inline-block open" onclick="return treeToggle(this)"></a>
+            <input type="hidden" name="level[]" value="{$level}"/>
+            <input type="hidden" name="delete[]" value="0"/>
+
+            <input type="hidden" name="id[]" value="{$ar[id]}"/>
+
+
+            <input class="w150" type="text" title="Заголовок" placeholder="Заголовок" name="title[]"
+                   value="{$ar[title]}"/>&nbsp;
+            <input class="w250" type="text" title="Ссылка" placeholder="Ссылка" name="link[]" value="{$ar[link]}"/>
+
+            <a href="#" class="inline-block up" onclick="return treeUp(this)"></a>
+            <a href="#" class="inline-block down" onclick="return treeDown(this)"></a> &nbsp;
+
+            <a href="#" class="inline-block add" onclick="return treeAdd({$level+1}, this)"></a> &nbsp;
+            <a href="#" class="inline-block delete" onclick="return treeDelete(this)"></a>
+
+            &nbsp;
+				<span class="inline-block">
+					<span class="block-gray dashed pointer" title="Дополнительно"
+                          onclick="$(this).parent().find('span:last').toggle();">Доп</span>
+					<span class="hidden">
+						<input class="w100" type="text" title="CSS класс" placeholder="CSS класс" name="css_class[]"
+                               value="{$ar[css_class]}"/>
+						<input class="w200" type="text" title="Регулярное выражение активности"
+                               placeholder="Регулярное выражение активности" name="preg[]" value="{$ar[preg]}"/>
+					</span>
+				</span>
+
+            {if $ar[childsCount]>0}
+
+            {pagesAdminMenu($ar[childs], $level+1)}
+            {else}
+            <ul class="tree hidden"></ul>
+            {end}
+
+        </li>
+        {else}
+        <li>
+            <a href="#" class="inline-block open" onclick="return treeToggle(this)"></a>
+            <input type="hidden" name="level[]" value="1"/>
+            <input type="hidden" name="delete[]" value="0"/>
+
+            <input type="hidden" name="id[]" value=""/>
+
+
+            <input class="w150" type="text" title="Заголовок" placeholder="Заголовок" name="title[]" value=""/>&nbsp;
+            <input class="w250" type="text" title="Ссылка" placeholder="Ссылка" name="link[]" value=""/>
+
+            <a href="#" class="inline-block up" onclick="return treeUp(this)"></a>
+            <a href="#" class="inline-block down" onclick="return treeDown(this)"></a> &nbsp;
+
+            <a href="#" class="inline-block add" onclick="return treeAdd({$level+1}, this)"></a> &nbsp;
+            <a href="#" class="inline-block delete" onclick="return treeDelete(this)"></a>
+            &nbsp;
+				<span class="inline-block">
+					<span class="block-gray dashed pointer" title="Дополнительно"
+                          onclick="$(this).parent().find('span:last').toggle();">Доп</span>
+					<span class="hidden">
+						<input class="w100" type="text" title="CSS класс" placeholder="CSS класс" name="css_class[]"
+                               value=""/>
+						<input class="w200" type="text" title="Регулярное выражение активности"
+                               placeholder="Регулярное выражение активности" name="preg[]" value=""/>
+					</span>
+				</span>
+
+            <ul class="tree hidden"></ul>
+        </li>
+        {end}
+    </ul>
+    {end}
+    {pagesAdminMenu($menu, 1)}
+    <a href="#" onclick="return treeAdd(1, this);" class="inline-block add"></a>
+
+    <p><input type="submit" name="save" value="Сохранить"/></p>
+</form>

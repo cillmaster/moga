@@ -1,0 +1,13 @@
+<p class="one-str">
+    <a href="%1$s" title="{{vectorPreviewCtrl.vector.full_name}} %6$s">{{vectorPreviewCtrl.vector.full_name}}</a>
+</p>
+<div class="block vector-block-preview">
+    <span class="canvas" ng-style="{'background-image': 'url(' + vectorPreviewCtrl.vector.preview + ')'}">
+        <span class="price">{{vectorPreviewCtrl.vector.price}}</span>
+        <span class="popup-form">
+            <a class="full-screen" href="%1$s"></a>
+            <a class="btn hover" href="%1$s">Preview</a>&nbsp;&nbsp;' .
+            ((noxSystem::authorization()) ? '<a class="btn js-loader" href="/payments/buy/vector/%5$s" rel="nofollow">Download&nbsp;for&nbsp;$%4$s</a>' : '<a class="btn js-popup" href="/payments/buy/vector/%5$s" data-wid="reg_main" data-wprm="buy">Download&nbsp;for&nbsp;$%4$s</a>') .
+        '</span>
+    </span>
+</div>

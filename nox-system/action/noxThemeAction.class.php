@@ -78,6 +78,7 @@ class noxThemeAction extends noxTemplateAction
 
         $theme = $themes[$theme];
 
+//        var_dump($themes,$theme); exit();
         //Загружаем файл шаблона
         if (!$this->themeTemplate->loadFromFile($theme['filename']))
         {

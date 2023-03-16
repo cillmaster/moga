@@ -1,0 +1,244 @@
+<div id="filemanager-body">
+
+    <script type="text/javascript" src="{$baseUrl}/{$moduleFolder}/js/jquery.iframe-post-form.js"></script>
+    <script type="text/javascript">
+        {eval $editor=(isset($_GET['editor']) && $_GET['editor']) ? 1 : 0;}
+        {eval $encodedFolder = urlencode($folder);}
+
+        var urlLast = '/administrator/filemanager?editor={$editor}&folder={$encodedFolder}';
+        function reload(url, not_push) {
+
+            if (!url) {
+                url = urlLast;
+            }
+            urlLast = url;
+
+            {if !$editor}
+            if (!not_push)
+            {
+                history.pushState(null, null, url);
+            }
+            {end}
+
+            $('#filemanager-body').addClass('loading');
+
+            $.get(url)
+                    .success(
+                    function (data) {
+
+                        $('#filemanager-body').html(data);
+
+                    }
+            )
+                    .error(
+                    function (data) {
+                        alert('Ошибка!');
+                    }
+            );
+
+            $('#filemanager-body').removeClass('loading');
+
+            /*
+            $('#filemanager-body').addClass('loading').load(url,
+                    function () {
+                        urlLast = url;
+                        if ($('#file-editor-div').length <= 0) {
+                            history.pushState(null, null, url);
+                        }
+                        $('#filemanager-body').removeClass('loading');
+                    }
+            );*/
+            return false;
+        }
+
+        function createFolder() {
+            var name = prompt('Введите имя для новой папки');
+
+            if (name) {
+                $('#filemanager-body').addClass('loading');
+
+                $.get('/administrator/filemanager?editor={$editor}&action=createfolder&path={$encodedFolder}&name=' + encodeURI(name))
+                        .success(
+                        function () {
+                            reload('/administrator/filemanager?editor={$editor}&folder={$encodedFolder}%2F' + encodeURI(name));
+                        }
+                )
+                        .error(
+                        function (data) {
+                            alert('Ошибка '+data.statusText+'!');
+                        }
+                )
+            }
+            return false;
+        }
+
+        function chmod(path, perms) {
+            var name = prompt('Введите новые права', perms);
+            if (name) {
+                $('#filemanager-body').addClass('loading');
+                $.get('/administrator/filemanager?editor={$editor}&action=chmod&path=' + encodeURI(path) + '&perms=' + name)
+                        .success(
+                        function () {
+                            reload();
+                        }
+                )
+                        .error(
+                        function (data) {
+                            alert('Ошибка!');
+                        }
+                )
+            }
+            return false;
+        }
+
+        function rename(path, name) {
+            var name = prompt('Введите новые имя', name);
+            if (name) {
+                $('#filemanager-body').addClass('loading');
+                $.get('/administrator/filemanager?editor={$editor}&action=rename&path=' + encodeURI(path) + '&name=' + name)
+                        .success(
+                        function () {
+                            reload();
+                        }
+                )
+                        .error(
+                        function (data) {
+                            alert('Ошибка!');
+                        }
+                )
+            }
+            return false;
+        }
+
+        function deleteF(path) {
+            if (confirm('Вы уверены?')) {
+                $('#filemanager-body').addClass('loading');
+                //prompt('/administrator/filemanager?editor={$editor}&action=delete&path=' + encodeURI(path));
+                $.get('/administrator/filemanager?editor={$editor}&action=delete&path=' + encodeURI(path))
+                        .success(
+                        function () {
+                            reload();
+                        }
+                )
+                        .error(
+                        function (data) {
+                            alert('Ошибка!');
+                        }
+                )
+            }
+            return false;
+        }
+
+        $(document).ready(
+                function () {
+                    $('#uploadform').iframePostForm({
+                        complete:function (res) {
+                            $('#filemanager-body').removeClass('loading');
+
+                            {if $editor}
+                            var newFiles = eval(res);
+                            if (newFiles.length != 1)
+                            {
+                                reload();
+                            } else
+                            {
+                                var fileName = newFiles[0];
+                                var a = $('<a href="#" data-path="'+fileName+'" class="edit-file"></a>');
+                                $('#filemanager-body').append(a);
+                                a.click();
+                            }
+                            {else}
+                            reload();
+                            {end}
+                        },
+                        post:function () {
+                            $('#filemanager-body').addClass('loading');
+                            return true;
+                        }
+
+                    });
+                }
+        );
+    </script>
+
+    <div id="file-editor-upload-div" class="no-wrap">
+        <form action="/administrator/filemanager?editor={$editor}&folder={$encodedFolder}" enctype="multipart/form-data" method="post" name="uploadform"
+              id="uploadform">
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+
+            <div class="inline-block w250">
+                <input name="uploads[]" type="file" multiple="multiple" placeholder="Выберите файлы" id="uploads" />
+            </div>
+            &nbsp;&nbsp;
+            <input type="submit" value="Загрузить">
+        </form>
+    </div>
+
+    <table class="ruler hover-row w100p no-wrap">
+        <thead>
+        <tr>
+            <th class="text-left">Имя&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#" onclick="return createFolder();" title="Создать новую папку"><img
+                        src="{$baseUrl}/{$moduleFolder}/images/addfolder.gif" alt="Создать папку"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#" onclick="return reload();" title="Обновить" class="update inline-block"></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {$folder}
+            </th>
+            <th class="w150">Размер</th>
+            <th class="w100">Права</th>
+            <th class="w16">&nbsp;</th>
+            {if $canDelete}
+            <th class="w16">&nbsp;</th>
+            {end}
+        </tr>
+        </thead>
+        <tbody id="table-body">
+
+        <tr>
+            <td colspan="{if $canDelete}5{else}4{end}"><img src="{$baseUrl}/{$moduleFolder}/images/up.gif" alt="Вверх"/> <a
+                    href="/administrator/filemanager?editor={$editor}&folder={urlencode(dirname($folder))}" title="Вверх"
+                    onclick="return reload(this.href);">Вверх</a></td>
+        </tr>
+
+        {foreach $subfolders as $ar}
+
+        <tr>
+            <td class="no-wrap"><img src="{$baseUrl}/{$moduleFolder}/images/dir.png" alt="Папка"/> <a
+                    href="/administrator/filemanager?editor={$editor}&folder={urlencode($folder.'/'.$ar[name])}" title="Открыть папку"
+                    onclick="return reload(this.href);">{$ar[name]}</a></td>
+            <td class="text-center">&nbsp;</td>
+            <td class="text-center pointer underline" onclick="chmod('{$folder.'/'.$ar[name]}', '{$ar[perms]}');"
+                title="Сменить права">{$ar[perms]}
+            </td>
+            <td class="edit pointer" onclick="rename('{$folder.'/'.$ar[name]}', '{$ar[name]}');" title="Переименовать">
+                &nbsp;</td>
+            {if $canDelete}
+            <td class="delete pointer" onclick="deleteF('{$folder.'/'.$ar[name]}');" title="Удалить">&nbsp;</td>
+            {end}
+        </tr>
+
+        {end}
+
+        {foreach $files as $ar}
+
+        <tr>
+        <td class="no-wrap"><img src="{$baseUrl}/{$moduleFolder}/images/{$ar[ext]}.png" alt=""/> <a
+                href="/administrator/filemanager?action=edit&path={urlencode($folder.'/'.$ar[name])}" data-path="{$folder.'/'.$ar[name]}"
+                title="Выбрать/Редактировать файл" class="edit-file">{$ar[name]}</a></td>
+        <td class="text-center"><a href="{$baseUrl}/{$moduleFolder}?action=download&path={urlencode($folder.'/'.$ar[name])}"
+                                   title="Скачать"><img src="{$baseUrl}/{$moduleFolder}/images/download.png" alt="Скачать"/></a>
+            {noxFormatBytes($ar[size])}
+        </td>
+        <td class="text-center pointer underline" onclick="chmod('{$folder.'/'.$ar[name]}', '{$ar[perms]}');"
+            title="Сменить права">{$ar[perms]}
+        </td>
+        <td class="edit pointer" onclick="rename('{$folder.'/'.$ar[name]}', '{$ar[name]}');" title="Переименовать"></td>
+        {if $canDelete}
+        <td class="delete pointer" onclick="deleteF('{$folder.'/'.$ar[name]}');" title="Удалить">&nbsp;</td>
+        {end}    
+        </tr>
+
+        {end}
+        </tbody>
+    </table>
+</div>

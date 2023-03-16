@@ -1,0 +1,64 @@
+s:3572:"<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+        <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+            <?php if (isset($breadcrumbs) && $breadcrumbs) foreach ($breadcrumbs as $index=>$crumb) { ?>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="<?php echo @$crumb['url']; ?>" title="<?php echo @$crumb['title']; ?>" class="crumb"><span itemprop="name"><?php echo @$crumb['name']; ?></span></a>
+                <meta itemprop="position" content="<?php echo @$index+1; ?>" />
+            </li>
+            <?php } ?>
+        </ol>
+        <div class="caption">
+            <h1 class="inline-block"><?php echo @$set['name_full']; ?> <?php echo @$seoUrl['typeTitle']; ?></h1>
+            <?php if (@($subCategory)) { ?>&nbsp;&nbsp;&nbsp;&nbsp;<a class="color-cyan small" href="/<?php echo @$category['url']; ?>-vector-drawings/<?php echo @$subCategory['url']; ?>" title="<?php echo @$subCategory['name']; ?> drawings and vector blueprints">All <?php echo @$subCategory['name']; ?> <?php echo @$seoUrl['typeTitle']; ?></a><?php } ?>
+        </div>
+        <br>
+        <div style="font-size: 18px;">Purchase <?php echo @$set['name_full']; ?> <?php echo @$seoUrl['typeTitle']; ?> in premium quality. We offer
+            vector blueprints in PDF, EPS, AI and other file formats. Download it now and use editable
+            <?php echo @$set['name_full']; ?> templates for wrap design, 3d modeling and other purposes.
+        </div>
+        <br>
+        <div style="font-size: 18px;">Use <a href="/search?q=<?php echo @$set['name_search']; ?>" title="Search All <?php echo @$set['name_full']; ?> blueprints" target="_blank">Search</a> for more blueprints.</div>
+        <br/>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <br>
+        <br>
+        <div class="grid_3 grid_first js_column-scroll">
+            <div id="sc" data-os="320" class="scroll-wrapper">
+                <div data-ng-include="'/nox-themes/default/templates/app/need-request.html'"></div>
+                <div class="hr"></div>
+                <?php echo @Prints::HTML_ICON_VECTOR; ?>
+                <p>Purchase and download these ready editable premium blueprints and scalable drawings.</p>
+                <br/>
+                <?php echo @Prints::HTML_ICON_PREPAY; ?>
+                <p>These items are approved to be made after your pre-order. Make payment and get this vector
+                    blueprint in 1-<?php echo @noxSystem::$prepayMaxDays; ?> work days.</p>
+            </div>
+            &nbsp;
+        </div>
+        <div id="mc" style="margin-left: 20px; width: 698px;" class="grid_9">
+            <?php $i = 0; ?>
+            <?php if (isset($vectors) && $vectors) foreach ($vectors as $v) { ?>
+            <?php if (@($i)) { ?>
+            <div class="grid_4<?php if (@($i%3 === 0)) { ?> grid_first<?php } ?>">
+                <?php $i++; ?>
+                <?php echo @printsVectorModel::viewVectorPreview($v, $seoUrl['typeUrl']); ?>
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            <?php } else { ?>
+            <div class="grid_8 grid_first">
+                <?php $i++; ?>
+                <?php echo @printsVectorModel::viewVectorPreview($v, false, 'large'); ?>
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            <?php } ?>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+";

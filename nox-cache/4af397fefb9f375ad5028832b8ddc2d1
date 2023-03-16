@@ -1,0 +1,85 @@
+s:4042:"<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+                <?php if (isset($breadcrumbs) && $breadcrumbs) foreach ($breadcrumbs as $index=>$crumb) { ?>
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <a itemprop="item" href="<?php echo @$crumb['url']; ?>" title="<?php echo @$crumb['title']; ?>" class="crumb"><span itemprop="name"><?php echo @$crumb['name']; ?></span></a>
+                    <meta itemprop="position" content="<?php echo @$index+1; ?>" />
+                </li>
+                <?php } ?>
+            </ol>
+            <h1 class="caption"><?php echo @$caption; ?></h1>
+            <br>
+            <div style="font-size: 18px;">Purchase premium quality car drawings and editable vector car clip art.
+                Buy ready files or order blueprint of any car. Use auto line drawing and diagram for design,
+                car sign writing and livery. Start using vector plans of vehicles today and simplify your
+                sketch process.</div>
+            <br/>
+            <div>
+                <a href="/nox-data/vector/free/opel-corsa-c-3-door-2000.pdf" target="_blank"
+                   title="Car blueprint PDF vector">See PDF Example</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <h3>Premium Vector Blueprints</h3>
+            <div>This is some examples of fine quality vector car blueprints that we produce.</div>
+            <br>
+        </div>
+    </div>
+    <div style="border-bottom: 1px solid #e2e2e2;" class="container_12">
+        <div class="grid_6 grid_first">
+            <?php if (@($titleVector['set'])) { ?>
+            <?php echo @printsSetModel::viewSetPreview($titleVector, false, 'large'); ?>
+            <?php } else { ?>
+            <?php echo @printsVectorModel::viewVectorPreview($titleVector, false, 'large'); ?>
+            <?php } ?>
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        <?php if (isset($relVectors) && $relVectors) foreach ($relVectors as $v) { ?>
+        <div class="grid_3">
+            <?php if (@($v['set'])) { ?>
+            <?php echo @printsSetModel::viewSetPreview($v); ?>
+            <?php } else { ?>
+            <?php echo @printsVectorModel::viewVectorPreview($v); ?>
+            <?php } ?>
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        <?php } ?>
+    </div>
+    <br><br>
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <h3>Car Line Drawings</h3>
+            <div>Select car brand below. We focus on car blueprints and drawings only. But if you need blueprints of
+                planes, ships, heavy equipment, smartphones etc. you can try our collateral list of<br/>
+                <a href="/vector-drawings" title="Other types of blueprints">Other types of blueprints</a>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="container_12">
+        <div style="border-bottom: none;" class="main-top-cars-cont">
+            <div style="padding-bottom: 0;" class="top-cars-cont container-row">
+                <?php $r = ceil(count($makeCars) / 6) - 1; ?>
+                <?php for ($i=0; $i<=5; $i++) { ?>
+                <div class="top-cars-col">
+                    <?php for ($j=0; $j<=$r; $j++) { ?>
+                    <?php $ind = $i * ($r + 1) + $j; ?>
+                    <?php if (@(isset($makeCars[$ind]))) { ?>
+                    <?php $m = $makeCars[$ind]; ?>
+                    <a href="/car-vector-drawings/<?php echo @$m['url']; ?>" title="<?php echo @$m['name']; ?> blueprints"><?php echo @$m['name']; ?></a>
+                    <?php } ?>
+                    <?php } ?>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+";

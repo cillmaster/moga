@@ -1,0 +1,477 @@
+<?
+$price = [(int)$print['price'], ($print['price']-(int)$print['price'])*100];
+$print['price'] = $price[0] . (($price[1]) ? '<sup>.' . $price[1] . '</sup>' : '');
+?>
+<div class="pre-content">
+    <div class="container_12">
+        <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+            {foreach $breadcrumbs as $index=>$crumb}
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{$crumb[url]}" title="{$crumb[title]}" class="crumb"><span itemprop="name">{$crumb[name]}</span></a>
+                <meta itemprop="position" content="{$index+1}" />
+            </li>
+            {end}
+        </ol>
+        <div class="caption">
+            <div class="grid_6 grid_first">
+                <h1>{$caption}</h1>
+                <div>{$per2}</div>
+            </div>
+            <div class="grid_6">
+                {if $subCategory}<a class="small color-cyan" href="/{$category[url]}-vector-drawings/{$subCategory[url]}" title="{$subCategory[name]} drawings and vector blueprints">All {$subCategory[name]} {$seoUrl[typeTitle]}</a>{end}
+                {if $set}<a class="small color-cyan" href="/sets/{$set[url]}-{$seoUrl[typeUrl]}" title="{$set[name_full]} drawings, vector blueprints and {$print[name]} wrap templates">All {$set[name_full]} {$seoUrl[typeTitle]}</a>{end}
+            </div>
+         </div>
+    </div>
+</div>
+{if $prepay}
+<div class="content bg-grey">
+    <div class="container_12">
+        <div class="grid_6 grid_first">
+            <div class="block-dbr block-prepay"></div>
+
+            <div data-ng-include="'/nox-themes/default/templates/app/free-vector.html'"></div>
+
+            <div class="print_likes">
+                <div class="fb-share-button" data-layout="button" ></div>
+                <div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+                <a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" rel="nofollow">
+                    <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" alt="pinterest"/>
+                </a>
+            </div>
+        </div>
+        <div class="grid_3" data-ng-controller="vectorPrintController as vectorPrintCtrl">
+            <div class="block block-wide-padding text-center">
+                <div style="margin: 8px 0;">{Prints::HTML_ICON_PREPAY}</div>
+                <h3>Pre-order this blueprint:</h3>
+                <p style="margin-bottom: 10px;">This blueprint is not ready and could be made in Premium vector quality after your payment.</p>
+                {if noxSystem::authorization() && !$purchase && $print[withoutTop]}
+                <div class="option-cont">
+                    <form id="options">
+                        <div class="cheсkbox-cont">
+                            <label>
+                                <input type="checkbox" name="top" ind="{$print[id]}" def="{$print[price]}" prepay>
+                                <span class="name">Add Top View</span>
+                                <span class="details">(+$9)</span>
+                            </label>
+                        </div>
+                    </form>
+                    <p style="padding: 10px 0 5px;">Our standard blueprints has Front-Side-Rear views. Order this popular option
+                        and get additional Top View.</p>
+                </div>
+                {end}
+                <p>
+                {if noxSystem::authorization()}
+                    {if $purchase}
+                        <a class="btn invert-colors" href="/download/vector/{$print[id]}" id="js-auto_download">
+                            <img src="/nox-themes/default/images/ui_icon-arrow.png" width="16" height="13" alt="Download">&nbsp;&nbsp;
+                            Download&nbsp;now</a>
+                    {else}
+                        <vector-pay invert-colors="true" vector-id="{$print[id]}" price="{$print[price]}"
+                        paytype="Make pre-payment" days-max="{noxSystem::$prepayMaxDays}"></vector-pay>
+                    {end}
+                {else}
+                    <a class="btn invert-colors js-popup" data-action="{$fixAction}" data-wid="reg_main" data-wprm="buy" href="#">
+                    <img src="/nox-themes/default/images/ui_icon-arrow.png" width="16" height="13" alt="Make pre-payment">&nbsp;&nbsp;
+                    Make pre-payment&nbsp;${$print[price]}</a>
+                {end}
+                </p>
+                <p style="margin-top: 10px;">
+                    Pre-pay right now to get this vector blueprints <b>Today</b> or up to <b>1-{noxSystem::$prepayMaxDays} work days</b>.
+                </p>
+            </div>
+            <p>&nbsp;</p>
+            <h3>Summary of upcoming blueprint:</h3>
+            <p><span title="Views / Projections / Planes">Views:</span> {Views::getViewsInHtml($print[views], true)}</p>
+            <p>License: <a class="color-cyan" href="/terms-of-service" target="_blank">Basic License</a></p>
+            <p>Scale: 1:{$print[scale]}</p>
+            <p>Units: mm | ft</p>
+            <p>Formats included (Hover over format to see versions and compatibility):</p>
+            <p>
+                {eval $print[ext] = explode(',', $print[ext])}
+                {eval $last = end($print[ext])}
+                {foreach $print[ext] as $ext}
+                <span class="cursor-help" title="<?=Prints::$vectorFormats[$ext]?>">{$ext}</span>
+                {if $ext !== $last} | {end}
+                {end}
+            </p>
+            <p>&nbsp;</p>
+            <h3>Options:</h3>
+            <p>
+                You could also add top view, dimensions, additional high-resolution JPEG/PNG, layered PSD, native CDR
+                files etc. Contact us right after your payment to manage all the possible options.
+            </p>
+            <p>&nbsp;</p>
+            <h3>Disclaimer:</h3>
+            <p>Attention! We <strong>DO NOT</strong> offer absolutely exact blueprints. So you CAN NOT use our blueprints for engineering, repair and tuning purposes.</p>
+        </div>
+        <div class="grid_3">
+            <h3>100% Guarantee</h3>
+            <p>We produce blueprints since 2006.<br>
+            Outlines Store is trusted by thousands of users.<br>
+            PayPal Verified. Secure Connection.<br>
+            We accept refunds: <a class="color-cyan" href="/refund-policy" target="_blank">Refund Policy</a>.</p>
+            <p>&nbsp;</p>
+            <h3>Features:</h3>
+            <p class="features"><strong>Editable Template</strong><br/>You could move and paint vehicle parts. Change it from black plastic
+                to metallic or select between glasses and panels.</p>
+            <p class="features"><strong>Actual Sizes</strong><br/>Our blueprints have correct sizes such as length,
+                width and height. And have variety of relevant versions.</p>
+            <p class="features"><strong>Scalable</strong><br/>This blueprint {if $prepay}would be{else}is{end} made with vector curves and strokes so you could
+                zoom in as much as you need in best quality.</p>
+            <p class="features"><strong>Separate layers</strong><br/>for body, parts, windows, wheels, lights etc.
+                Each blueprint could be used as lined wireframes and as a filled shapes.</p>
+            <p>&nbsp;</p>
+            <h3>Purposes and accuracy:</h3>
+            <p>Our blueprints have an accuracy between 95 and 99% and are acceptable for:</p>
+            <p>&#9679; <strong>Visual content</strong> (publishing, printing and website illustrations, mobile apps, infographics);</p>
+            <p>&#9679; <strong>{$print[name]} Wrap blueprints</strong> ({$mn} wrap, paint, full body wrapping, vinyls and stickers);</p>
+            <p>&#9679; <strong>3D modeling</strong> (for amateur and professional 3D artists);</p>
+            <p>&#9679; <strong>Replica making</strong> (3D printing, wood, metal, paper works etc);</p>
+            <p>&#9679; Other visual purposes that require vehicle views in hi-res bitmaps, PDF or vectors.</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</div>
+{else}
+<div class="content bg-grey">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <div class="block-gr-br">
+                <div class="block14" style="box-shadow: 0 5px 5px 0 rgba(0,0,0,0.25);">
+                    <div class="block-content relative">
+                        <img src="{$print[preview]}" alt="{$seoImg}" title="{$seoImg}" width="448" height="auto">
+                    </div>
+                </div>
+            </div>
+            <div class="print-like-cont" style="text-align: center; padding: 20px 0;">
+                <div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+                <div>
+                    <a href="{$print[preview]}" target="_blank" class="a30" title="{$imageDownloadTitle}">
+                        <img src="/nox-themes/default/images/img-source.png" width="16" height="16" alt="Image source"> Image
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="grid_4 force-page-ready-vector" style="font-size: 18px;">
+            <h2 style="text-align: center;" >Get this blueprint now:</h2>
+            <div class="block block-wide-padding text-center" style="padding: 15px;">
+                <div style="margin: 8px 0;">{Prints::HTML_ICON_VECTOR_FILL}</div>
+                <p style="margin-bottom: 10px;">Buy this {$subCategory[name]} {$print[name]} {$print[name_version]} blueprint
+                    and line drawing in high quality editable vector file formats. Best for 3d and car wrap design.
+                </p>
+                {if noxSystem::authorization() && !$purchase && $print[withoutTop]}
+                <div class="option-cont">
+                    <form id="options">
+                        <div class="cheсkbox-cont">
+                            <label>
+                                <input type="checkbox" name="top" ind="{$print[id]}" def="{$print[price]}">
+                                <span class="name">Add Top View</span>
+                                <span class="details">(+$9)</span>
+                            </label>
+                        </div>
+                    </form>
+                    <p style="padding: 10px 0 5px; font-size: 15px; color: #a4a4a4;">Our standard blueprints has
+                        Front-Side-Rear views. Order this popular option and get additional Top View.</p>
+                </div>
+                {end}
+                <p style="padding: 8px 0;">
+                    {if noxSystem::authorization()}
+                    {if $purchase}
+                    <a class="btn large invert-colors" href="/download/vector/{$print[id]}" id="js-auto_download">
+                        <img src="/nox-themes/default/images/icon-download-20.png" width="20" height="17" alt="Download">&nbsp;&nbsp;
+                        Download&nbsp;now</a>
+                    {else}
+                    <vector-pay invert-colors="true" large="true" vector-id="{$print[id]}" price="{$print[price]}"
+                                paytype="Download for" days-max="{noxSystem::$prepayMaxDays}"></vector-pay>
+                    {end}
+                    {else}
+                    <a class="btn large invert-colors js-popup" data-action="{$fixAction}" data-wid="reg_main" data-wprm="buy" href="#">
+                        <img src="/nox-themes/default/images/icon-download-20.png" width="20" height="17" alt="Download">&nbsp;&nbsp;
+                        Download&nbsp;for&nbsp;${$print[price]}</a>
+                    {end}
+                </p>
+                <p style="margin-top: 10px;">
+                    <s>($<span class="real-price-in-html">{$print['price']+11}</span>)</s> Buy now and save $11
+                </p>
+            </div>
+            <p>&nbsp;</p>
+            <h2>Summary:</h2>
+            <p><span title="Views / Projections / Planes">Views:</span> {Views::getViewsInHtml($print[views], true)}</p>
+            <p>License: <a class="color-cyan" href="/terms-of-service" target="_blank">Basic License</a></p>
+            <p>Scale: 1:{$print[scale]}</p>
+            <p>Units: mm | ft</p>
+            <p>Formats included (Hover over format to see versions and compatibility):</p>
+            <p>
+                {eval $print[ext] = explode(',', $print[ext])}
+                {eval $last = end($print[ext])}
+                {foreach $print[ext] as $ext}
+                <span class="cursor-help" title="<?=Prints::$vectorFormats[$ext]?>">{$ext}</span>
+                {if $ext !== $last} | {end}
+                {end}
+            </p>
+        </div>
+    </div>
+    <div class="container_12">
+        <div class="hr"></div>
+    </div>
+    <div class="container_12">
+        <div class="grid_6 grid_first">
+            <div class="clearfix">
+                <div class="grid_6 grid_first">
+                    <h3>100% Guarantee</h3>
+                    <p>We produce blueprints since 2006.<br>
+                        Outlines Store is trusted by thousands of users.<br>
+                        PayPal Verified. Secure Connection.<br>
+                        We accept refunds: <a class="color-cyan" href="/refund-policy" target="_blank">Refund Policy</a>.
+                    </p>
+                    <br>
+                    <h3>Share this item:</h3>
+                    <div class="print_likes" style="text-align: left; padding: 8px 0;">
+                        <div class="fb-share-button" data-layout="button" ></div>
+                        <a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" rel="nofollow">
+                            <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" alt="pinterest"/>
+                        </a>
+                    </div>
+                    <p> </p>
+                </div>
+                <div class="grid_6">
+                    <h3>Disclaimer:</h3>
+                    <p>Attention! We <strong>DO NOT</strong> offer absolutely exact blueprints. So you CAN NOT use our blueprints for engineering, repair and tuning purposes.</p>
+                    <p> </p>
+                </div>
+            </div>
+            <div data-ng-include="'/nox-themes/default/templates/app/free-vector.html'"></div>
+        </div>
+        <div class="grid_3">
+            <h3>Features:</h3>
+            <p class="features"><strong>Editable Template</strong><br/>You could move and paint vehicle parts. Change it from black plastic
+                to metallic or select between glasses and panels.</p>
+            <p class="features"><strong>Actual Sizes</strong><br/>Our blueprints have correct sizes such as length,
+                width and height. And have variety of relevant versions.</p>
+            <p class="features"><strong>Scalable</strong><br/>This blueprint {if $prepay}would be{else}is{end} made with vector curves and strokes so you could
+                zoom in as much as you need in best quality.</p>
+            <p class="features"><strong>Separate layers</strong><br/>for body, parts, windows, wheels, lights etc.
+                Each blueprint could be used as lined wireframes and as a filled shapes.</p>
+            <p>&nbsp;</p>
+        </div>
+        <div class="grid_3">
+            <h3>Purposes and accuracy:</h3>
+            <p>Our blueprints have an accuracy between 95 and 99% and are acceptable for:</p>
+            <p>&#9679; <strong>Visual content</strong> (publishing, printing and website illustrations, mobile apps, infographics);</p>
+            <p>&#9679; <strong>{$print[name]} Wrap blueprints</strong> ({$mn} wrap, paint, full body wrapping, vinyls and stickers);</p>
+            <p>&#9679; <strong>3D modeling</strong> (for amateur and professional 3D artists);</p>
+            <p>&#9679; <strong>Replica making</strong> (3D printing, wood, metal, paper works etc);</p>
+            <p>&#9679; Other visual purposes that require vehicle views in hi-res bitmaps, PDF or vectors.</p>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+</div>
+{end}
+<script>
+    let optTop = document.forms.options.top;
+    optTop.addEventListener('click', function(){
+        let on = optTop.checked, arr,
+            ind = optTop.getAttribute('ind'),
+            extra = on ? 9 : 0,
+            prepay = optTop.hasAttribute('prepay'),
+            price = +optTop.getAttribute('def') + extra;
+        arr = document.querySelectorAll('vector-pay');
+        for(let i = 0; i < arr.length; i++){
+            arr[i].setAttribute('price', price);
+        }
+        arr = document.querySelectorAll('.price-in-html');
+        for(let i = 0; i < arr.length; i++){
+            arr[i].innerHTML = price;
+        }
+        arr = document.querySelectorAll('.real-price-in-html');
+        for(let i = 0; i < arr.length; i++){
+            arr[i].innerHTML = price + 11;
+        }
+        if(extra && !prepay){
+            document.body.setAttribute('vector-with-top', 'on');
+        } else {
+            document.body.removeAttribute('vector-with-top');
+        }
+        document.cookie = 'pay_real_price=' + [ind, extra].join('::') + '; path=/';
+    });
+</script>
+<div class="content">
+    <div class="container_12">
+        <p>&nbsp;</p>
+        <h3 style="padding-bottom: 6px">Best drawings for you:</h3>
+        {eval $i = 0}
+        {foreach $relVectorsTop as $v}
+        <div class="grid_3{if $i%4 === 0} grid_first{end}">
+            {eval $i++}
+            {printsVectorModel::viewVectorPreview($v, $seoUrl[typeUrl])}
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        {end}
+    </div>
+    <div class="container_12">
+        <div class="hr"></div>
+        <div class="grid_6 grid_first">
+            <h3>About this {$mn} blueprint</h3>
+            <div>This {$resName} blueprint helps designers, wrap studios and 3d artists to simplify their work process,
+                to get extra time for creative work instead of routine.</div><br/>
+            <div>This is blueprint of {$print[name]} produced by carmaker {$subCategory[name]} in {$per2}.
+                It has {$printDesc[body]} body design and we define its vehicle class as {$printDesc[class]}.</div><br/>
+            <div>Download this auto vector blueprint and add something special and soulful to your project. We focus
+                on cars only and produce fine quality <strong>car blueprints</strong> (clip arts) and vector line
+                drawings available in many vector file formats supporting by most of designer software and CAD.</div><br/>
+            <div>Livery Designers, Sign Writers, Wrap Designers use this blueprint to create car body wrap, lettering
+                and vinyl graphics. It’s perfectly matched with both raster and vector art software.</div><br/>
+            <div>3D artists and studios use this blueprint for 3d design and modeling. They make 3d objects and use
+                these ready 3d car models for 3d animation, video games, 3d renders and visualisations.</div><br/>
+            <div>Some professional branding agencies, design identity studios and creative agencies already use our
+                blueprints as a standard to provide better communication and emotion for their customers and clients.
+                Try it today and upgrage your experience with Outlines.</div>
+        </div>
+        <div class="grid_6">
+            <div class="bulk-wrap">
+                <div class="clearfix block">
+                    <div class="grid_6 grid_first">&nbsp;</div>
+                    <div class="grid_6 info-cont">
+                        <h3>Bulk Purchase</h3>
+                        <p>Get discount buying more than 10 vector blueprints, please email us to get
+                            your special offer and wholesale pricing.</p>
+                        <p>
+                            {if noxSystem::authorization()}
+                            <!--noindex-->
+                            <a class="btn" href="mailto:hello@getoutlines.com?subject=Bulk Purchase of blueprints on Outlines&body=Hello, Outlines. I am interested in bulk purchase of vector blueprints. (Please do not remove these tags: bulk purchase, wholesale)."
+                               target="_blank">Contact us</a>
+                            <!--/noindex-->
+                            {else}
+                            <a class="btn js-popup" data-wid="reg_main" data-wprm="bulk"
+                               data-action="bulk" href="#">Contact us</a>
+                            {end}
+                        </p>
+                    </div>
+                </div>
+                {if noxSystem::authorization()}
+                <!--noindex-->
+                <a href="mailto:hello@getoutlines.com?subject=Bulk Purchase of blueprints on Outlines
+                    &body=Hello, Outlines. I am interested in bulk purchase of vector blueprints. (Please do not remove these tags: BULK, WHOLESALE)."
+                   target="_blank" class="bulk-img">
+                    <img src="/nox-themes/default/images/block-wholesale-picture.png" alt="Contact us">
+                </a>
+                <!--/noindex-->
+                {else}
+                <a data-wid="reg_main" data-wprm="bulk" data-action="bulk" href="#" class="bulk-img js-popup">
+                    <img src="/nox-themes/default/images/block-wholesale-picture.png" alt="Contact us">
+                </a>
+                {end}
+            </div>
+        </div>
+    </div>
+    <div class="container_12">
+        <div class="hr"></div>
+        {eval $i = 0}
+        {foreach $relVectors as $v}
+        <div class="grid_3{if $i%4 === 0} grid_first{end}">
+            {eval $i++}
+            {printsVectorModel::viewVectorPreview($v, $seoUrl[typeUrl])}
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        {end}
+    </div>
+</div>
+{if isset($fbq)}
+<script>
+    fbq('track', 'ViewContent', {
+        content_type: 'product',
+        content_ids: ['{$fbq[id]}'],
+        content_name: '{$fbq[name]}',
+        content_category: 'Blueprints',
+        value: {$fbq[price]},
+        currency: 'USD'
+    });
+    // function gtag(
+    gtag('event', 'page_view', {
+        'send_to': 'AW-1033691228',
+        'ecomm_prodid': '{$fbq[id]}',
+        'ecomm_pagetype': 'product',
+        'items': [{
+            'ecomm_prodid': '{$fbq[id]}',
+            'ecomm_pagetype': 'product',
+            'id': '{$fbq[id]}',
+            'google_business_vertical': 'retail'
+        }]
+    });
+</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{$schPr[name]}",
+        "image": [
+            "{$schPr[img]}"
+        ],
+        "description": "{$schPr[description]}",
+        "brand": {
+            "name": "{$schPr[brand]}"
+        },
+        "offers": {
+            "@type": "Offer",
+            "url": "{$schPr[url]}",
+            "priceCurrency": "USD",
+            "price": "{$schPr[price]}",
+            "availability": "InStock"
+        }
+    }
+</script>
+{end}
+{if isset($payment_prm)}
+<script>
+    var paymentTransaction = {
+            'id': '{$payment_prm[0]}',
+            'revenue': '{$payment_prm[2]}'
+        },
+        paymentItem = {
+            'id': '{$payment_prm[0]}',
+            'name': '{$payment_prm[1]}',
+            'category': '{$payment_prm[3]}',
+            'price': '{$payment_prm[2]}'
+        };
+    ga('require', 'ecommerce');
+    ga('ecommerce:addTransaction', paymentTransaction);
+    ga('ecommerce:addItem', paymentItem);
+    ga('ecommerce:send');
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'ecommerce': {
+            'currencyCode': 'USD',
+            'purchase' : {
+                "actionField" : paymentTransaction,
+                "products" : [paymentItem]
+            }
+        }
+    });
+</script>
+{end}
+{if isset($prepayment_success)}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('msg', 'prepayment_success');
+    })
+</script>
+{end}
+{if isset($forceBuy) && noxSystem::authorization()}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('forceBuy').click();
+    })
+</script>
+{end}
+<?php
+     if(isset($_GET['download']) && ($_GET['download'] == 'true')) {
+?>
+<script>
+    $(document).ready(function() {
+        window.location = $('#js-auto_download').attr('href');
+    });
+</script>
+<?php
+     }
+?>

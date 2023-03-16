@@ -1,0 +1,26 @@
+{if isset($error)}
+     <div style="background: #cd0a0a; color: #fff; padding: 10px; cursor: pointer" onclick="this.style.display = 'none';">
+         {$error}
+     </div>
+{end}
+<form action="{$url}" method="post">
+
+    <p>
+        <span><input type="submit" name="submit" value="Сохранить" /></span>
+    </p>
+
+    <p>
+        <label>Название</label>
+        <span><input type="text" name="new[name]" value="{if isset($ar[name])}{htmlspecialchars($ar[name])}{end}" /></span>
+    </p>
+
+    <p>
+        <label>Название в ед. числе</label>
+        <span><input type="text" name="new[name_singular]" value="{if isset($ar[name_singular])}{htmlspecialchars($ar[name_singular])}{end}" /></span>
+    </p>
+
+    <p>
+        <span><input type="submit" name="submit" value="Сохранить" /></span>
+    </p>
+
+</form>

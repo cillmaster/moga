@@ -1,12 +1,12 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-var outlines;
-(function (outlines) {
-    outlines.MODULE = 'outlines';
-    angular.module(outlines.MODULE, []);
-    angular.element(document).ready(function () {
-        angular.bootstrap(document, [outlines.MODULE]);
-    });
-})(outlines || (outlines = {}));
+// var outlines;
+// (function (outlines) {
+//     outlines.MODULE = 'outlines';
+//     angular.module(outlines.MODULE, []);
+//     angular.element(document).ready(function () {
+//         angular.bootstrap(document, [outlines.MODULE]);
+//     });
+// })(outlines || (outlines = {}));
 function base64_decode(data) {
     var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     var o1, o2, o3, h1, h2, h3, h4, bits, i = 0, enc = '';
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     PopupController.$inject = ['popupService'];
 
-    angular.module('outlines').directive('popup2', function() {
+    angular.module('outlines').directive('popup', function() {
         return {
             restrict: 'E',
             templateUrl: '/nox-themes/default/templates/app/popup.html',
@@ -445,7 +445,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 })();
-
 (function() {
     angular.module('outlines').factory('userService', ['dataService', userService]);
 

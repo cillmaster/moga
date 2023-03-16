@@ -1,0 +1,91 @@
+<form action="{$url}" method="POST">
+    <input type="hidden" name="id" value="{$page[id]}"/>
+    <input type="hidden" name="url" value="{$page[url]}"/>
+
+    <p><span><input type="submit" name="save" value="Сохранить"/></span></p>
+
+    <p><label>Заголовок окна Title:</label> <span><input type="text" title="Заголовок окна" placeholder="Заголовок окна"
+                                                   name="new[title]" value="{$page[title]}" id="page-title"/></span></p>
+
+    <p><label>Заголовок страницы H1:</label> <span><input type="text" title="Название страницы"
+                                                          placeholder="Название страницы" name="new[caption]"
+                                                          value="{$page[caption]}" id="page-caption"
+                                                          required="required"/></span></p>
+
+    <p><label>Адрес страницы (начиная с /):</label> <span><input type="text" title="Адрес страницы (начиная с /)"
+                                                                 placeholder="Адрес страницы (начиная с /)"
+                                                                 name="new[url]" value="{$page[url]}" id="page-url"
+                                                                 required="required"/></span></p>
+
+    <p><label>Текст:</label> <span><textarea title="Текст" placeholder="Текст" name="new[text]" id="1"
+                                             class="text-editor">{htmlspecialchars($page[text])}</textarea></span></p>
+
+    <fieldset class="fieldset-slide">
+        <legend>Дополнительные параметры</legend>
+        </p>
+
+        <p><label>Публикация:</label>
+		<span>
+		<?php
+			echo noxForm::getSelect('new[published]', $page['published'], 
+				array( 'не опубликован', 'виден только администраторам', 'виден только зарегистрированным', 'виден всем')
+			);
+		?>
+		</span>
+        </p>
+
+        <p><label>Ключевые слова:</label>
+            <span><textarea title="Ключевые слова" placeholder="Ключевые слова" name="new[meta_keywords]">{$page[meta_keywords]}</textarea></span>
+        </p>
+
+        <p><label>Описание:</label>
+            <span><textarea title="Описание" placeholder="Описание" name="new[meta_description]">{$page[meta_description]}</textarea></span>
+        </p>
+
+        <p><label>Тема оформления:</label>
+		<span>	
+		<?php 
+			//Получаем список всех шаблонов
+			if ($themes = noxConfig::getThemes())
+			foreach ($themes as $value=>$temp)
+			{
+				$themes_array[$value] = $temp['name'];
+			}		
+			echo noxForm::getSelect('new[theme]', $page['theme'], $themes_array);
+		?>
+		</span>
+        </p>
+
+        <p><label>Шаблон:</label>
+            <span>
+		<?php
+			echo noxForm::getSelect('new[template]', $page['template'],
+				array( 'half' => 'По центру', 'full' => 'На всю ширину')
+			);
+		?>
+		</span>
+        </p>
+
+        <p><label>Локаль:</label>
+		<span>	
+		<?php 
+			//Получаем список всех локалей
+			$config = noxConfig::getConfig();
+			$locale = explode(',', $config['locale']);
+			echo noxForm::getSelect('new[locale]', $page['locale'], array_combine($locale, $locale));
+		?>	
+		</span>
+        </p>
+        <p><label>Sitemap:</label>
+        <span>
+		<?php
+			echo noxForm::getSelect('new[sitemap]', $page['sitemap'],
+				array( 'no' => 'No', 'yes monthly 0.1' => 'Yes (monthly 0.1)', 'yes weekly 1.0' => 'Yes (weekly 1.0)')
+			);
+		?>
+        </span>
+        </p>
+    </fieldset>
+
+    <p><span><input type="submit" name="save" value="Сохранить"/></span></p>
+</form>

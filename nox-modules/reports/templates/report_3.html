@@ -1,0 +1,41 @@
+<style>
+    table td, table th{
+        text-align: center;
+    }
+</style>
+<div class="filter-panel">
+    <form method="get" action="{$url}" class="inline-block">
+        <input type="hidden" name="report_id" value="3">
+        Сортировать по:&nbsp;
+        <select class="js-change-send" name="order">
+            <option value="0">количеству покупок</option>
+            <option value="1"{if $_GET[order] == 1} selected{end}>сумме покупок</option>
+        </select>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.js-change-send').on('change', function() {
+            $(this).parents('form').submit();
+        });
+    });
+</script>
+<table class="ruler" width="400px">
+    <thead>
+    <tr>
+        <th>Set</th>
+        <th>Purchases</th>
+        <th>Sales($)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+    <tr>
+        <td>{$ar[n]}</td>
+        <td>{$ar[c]}</td>
+        <td>{$ar[s]}</td>
+    </tr>
+    {end}
+    </tbody>
+</table>

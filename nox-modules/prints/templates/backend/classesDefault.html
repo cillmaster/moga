@@ -1,0 +1,37 @@
+<p><a href="?section=classes&action=add" class="inline-block add" title="Добавить"></a></p>
+
+<table class="hover">
+    <thead>
+    <tr>
+        <th class="w50">ID</th>
+        <th>Название</th>
+        <th>CatTags</th>
+        <th>CatUseTags</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $ar}
+    <tr>
+        <td>
+            {$ar[id]}
+        </td>
+        <td>
+            <a href="?section=classes&action=edit&amp;id={$ar[id]}">{htmlspecialchars($ar[name])}</a>
+        </td>
+        <td>
+            <a href="/administrator/tag?section=tag&action=category&id={$ar[id]}">Edit CatTags</a>
+        </td>
+        <td>
+            <a href="/administrator/tag?section=tag&action=categoryUse&id={$ar[id]}">Edit CatUseTags</a>
+        </td>
+        <td>
+            <a href="?section=classes&action=edit&amp;id={$ar[id]}" class="inline-block edit" title="Редактировать"></a>
+            <a href="?section=classes&action=delete&amp;id={$ar[id]}" class="inline-block delete" title="Удалить"></a>
+        </td>
+    </tr>
+    {end}
+    </tbody>
+</table>
+
+<p><a href="?section=classes&action=add" class="inline-block add" title="Добавить"></a></p>
