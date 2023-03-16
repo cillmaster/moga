@@ -1,8 +1,0 @@
-<a class="btn hover"
-   ng-class="{'invert-colors':vectorPayCtrl.invertColors, large:vectorPayCtrl.large}"
-   ng-href="/payments/buy/vector/{{vectorPayCtrl.vectorId}}"
-   ng-click="$event.preventDefault(); vectorPayCtrl.openDialog()" rel="nofollow">
-    <img ng-show="!vectorPayCtrl.large" src="/nox-themes/default/images/ui_icon-arrow.png" width="16" height="13">
-    <img ng-show="vectorPayCtrl.large" src="/nox-themes/default/images/icon-download-20.png" width="20" height="17">
-    &nbsp;&nbsp;<span ng-bind-html="vectorPayCtrl.paytype"></span>&nbsp; $<span ng-bind-html="vectorPayCtrl.price" class="price-in-html"></span>
-</a>

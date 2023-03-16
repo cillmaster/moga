@@ -1,5 +1,0 @@
-{
-    "require": {
-        "foolz/sphinxql-query-builder": "^1.1"
-    }
-}
