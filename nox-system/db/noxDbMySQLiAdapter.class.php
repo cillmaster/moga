@@ -45,7 +45,7 @@ class noxDbMySQLiAdapter extends noxDbAdapter
         $this->DB = $params['db'];
         if (!($this->CID))
         {
-            throw new noxException('Ошибка соединения с базой данных!');
+            throw new noxException('Ошибка соединения с базой данных!' . mysqli_connect_error());
         }
 
         if (!$this->query('SET NAMES utf8'))
