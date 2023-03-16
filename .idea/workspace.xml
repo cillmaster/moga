@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8df37882-9bd5-462e-b873-a2cb5c440711" name="Changes" comment="install env">
-      <change beforePath="$PROJECT_DIR$/nox-config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nox-config/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-config/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nox-system/application/noxApplication.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-system/application/noxApplication.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nox-system/autoload/noxAutoLoader.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-system/autoload/noxAutoLoader.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nox-system/cache/noxSystemCache.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-system/cache/noxSystemCache.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nox-system/noxSystem.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/nox-system/noxSystem.class.php" afterDir="false" />
-    </list>
+    <list default="true" id="4528839d-f020-452d-836e-9e0dec2b4d34" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,9 +24,13 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/perrorlog" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpServers">
     <servers>
       <server host="moga.local.ru" id="020c924c-91da-42c6-9844-17c4c9903954" name="moga" />
@@ -73,6 +70,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager" selected="PHP Web Page.moga">
     <configuration name="moga" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" server_name="moga">
       <method v="2" />
@@ -103,6 +105,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gulp.js.default" />
         <item itemvalue="Gulp.js.default" />
       </list>
     </recent_temporary>
@@ -151,5 +154,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="install env" />
     <option name="LAST_COMMIT_MESSAGE" value="install env" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/nox-system/db/noxDbMySQLiAdapter.class.php</url>
+          <line>44</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
