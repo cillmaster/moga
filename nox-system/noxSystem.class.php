@@ -164,27 +164,23 @@ class noxSystem
      * Преобразовывает массив в URL
      *
      * @param array $array массив
-     * @param int $start   номер начального элемента
-     * @param int $count   количество элементов
+     * @param int $start номер начального элемента
+     * @param int $count количество элементов
      * @return string строка
      */
     public static function buildUrl($array = false, $start = null, $count = null)
     {
         //Если масссив не задан
-        if ($array === false)
-        {
+        if ($array === false) {
             //Берем текущий массив URL
             $array = self::$urlArray;
         }
         //Обрезаем массив
         $t = array_slice($array, $start, $count);
         //Преобразуем в строку
-        if (!$t)
-        {
+        if (!$t) {
             return '/';
-        }
-        else
-        {
+        } else {
             return '/' . implode('/', $t);
         }
     }
@@ -221,8 +217,7 @@ class noxSystem
         //Стандартные заголовки
         header("Content-type: text/html; charset=utf-8", true);
 
-        try
-        {
+        try {
             //Загружаем стандартное исключение
             require_once(noxRealPath('nox-system/exception/noxException.class.php'));
             //Загружаем класс кэширования
@@ -259,8 +254,8 @@ class noxSystem
             //Задаем локаль по-умолчанию
             $config = noxConfig::getConfig();
             noxLocale::setLocale(isset($_COOKIE['nox_locale']) ? $_COOKIE['nox_locale'] : $config['defaultLocale']);
-			//Если не режим отладки
-			
+            //Если не режим отладки
+
             //Создаем объект управления пользователями
             self::$userControl = new noxUserControl();
 
@@ -277,12 +272,10 @@ class noxSystem
             //Base URL
             //TODO: Как определяется baseURL
             self::$baseUrl = trim(dirname($_SERVER['SCRIPT_NAME']), '\\/');
-            if (empty(self::$baseUrl))
-            {
+            if (empty(self::$baseUrl)) {
                 self::$baseUrl = '';
-            } else
-            {
-                self::$baseUrl = '/'.self::$baseUrl;
+            } else {
+                self::$baseUrl = '/' . self::$baseUrl;
             }
 
             //Берем URL с параметрами
@@ -290,34 +283,34 @@ class noxSystem
             //Если есть параметр url берем с него
             self::$requestUrl = self::$requestPath = rtrim(urldecode($_SERVER['REQUEST_URI']), '/');
             self::$requestUrl = self::$requestPath = substr(self::$requestUrl, strlen(self::$baseUrl));
-            if (empty(self::$requestUrl))
-            {
+            if (empty(self::$requestUrl)) {
                 self::$requestUrl = self::$requestPath = '/';
             }
 
             //Полный адрес
             self::$fullUrl =
                 ((empty($_SERVER['HTTPS']) || ($_SERVER['HTTPS'] == 'off')) ? 'http://' : 'https://') .
-                    self::$domain .
-                    self::$baseUrl.
-                    self::$requestUrl;
+                self::$domain .
+                self::$baseUrl .
+                self::$requestUrl;
 
             //Получаем URL без параметров
             $i = strpos(self::$requestPath, '?');
-            if ($i > 0)
-            {
-                self::$requestPath = '/'.trim(substr(self::$requestPath, 0, $i), '/');
+            if ($i > 0) {
+                self::$requestPath = '/' . trim(substr(self::$requestPath, 0, $i), '/');
             }
             //Массив URL
             self::$urlArray = self::parseUrl(self::$requestPath);
 
-            function init_get_values($value, $key){
-                $prm = explode(' ',$key);
-                if(isset($prm[1]) && !isset($_GET[$prm[0]][$prm[1]]))
+            function init_get_values($value, $key)
+            {
+                $prm = explode(' ', $key);
+                if (isset($prm[1]) && !isset($_GET[$prm[0]][$prm[1]]))
                     $_GET[$prm[0]][$prm[1]] = $value;
-                else if(!isset($_GET[$prm[0]]))
+                else if (!isset($_GET[$prm[0]]))
                     $_GET[$prm[0]] = $value;
             }
+
             self::$params['get_preset'] = include(noxRealPath('nox-config/get.php'));
             array_walk_recursive(self::$params['get_preset'], 'init_get_values');
 
@@ -327,6 +320,7 @@ class noxSystem
                 {
                     $value = stripslashes($value);
                 }
+
                 array_walk_recursive($_GET, 'stripslashes_gpc');
                 array_walk_recursive($_POST, 'stripslashes_gpc');
                 array_walk_recursive($_COOKIE, 'stripslashes_gpc');
@@ -340,18 +334,17 @@ class noxSystem
 
             //Ajax запрос?
             self::$ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-                !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-                (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'))
+                    !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+                    (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'))
                 || isset($_REQUEST['ajax']);
 
             self::$params['ajax'] = self::$ajax;
 
             //Проверяем откуда пришел пользователь
-            if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
-            {
+            if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
                 $ref = $_SERVER['HTTP_REFERER'];
                 $server_add =
-                    ((empty($_SERVER['HTTPS']) || ($_SERVER['HTTPS'] == 'off')) ? 'http://' : 'https://').self::$domain;
+                    ((empty($_SERVER['HTTPS']) || ($_SERVER['HTTPS'] == 'off')) ? 'http://' : 'https://') . self::$domain;
                 self::$safeReferer = !(bool)(substr_compare($ref, $server_add, 0, strlen($server_add)));
                 self::$params['safeReferer'] = self::$safeReferer;
             }
@@ -359,18 +352,14 @@ class noxSystem
             //Создаем приложение
 
             $userApplicationPath = noxRealPath('nox-config/application.class.php');
-            if (file_exists($userApplicationPath))
-            {
+            if (file_exists($userApplicationPath)) {
                 include(noxRealPath('nox-config/application.class.php'));
-                if (class_exists('application', false))
-                {
+                if (class_exists('application', false)) {
                     $application = new application();
-                } else
-                {
+                } else {
                     $application = new noxApplication();
                 }
-            } else
-            {
+            } else {
                 $application = new noxApplication();
             }
             //Запускаем
@@ -385,14 +374,13 @@ class noxSystem
             //Закрываем все открытые соединения с БД
             noxDbConnector::closeAll();
 
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             header("Content-type: text/html; charset=utf-8", true);
             print $e;
         }
         //_d(noxSystem::dump());
         //_d($_SERVER);
-        $GLOBALS['statistic']['time'] = microtime(true)-$GLOBALS['statistic']['time'];
+        $GLOBALS['statistic']['time'] = microtime(true) - $GLOBALS['statistic']['time'];
         //_d($GLOBALS['statistic']);
     }
 
@@ -404,16 +392,12 @@ class noxSystem
      */
     public static function location($url = '', $str = "Перенаправление...")
     {
-        if ($url == '')
-        {
+        if ($url == '') {
             $url = self::$fullUrl;
-        } elseif (is_array($url))
-        {
+        } elseif (is_array($url)) {
             $url = self::$baseUrl . '/' . implode('/', $url);
-        } else
-        {
-            if ($url[0] == '/')
-            {
+        } else {
+            if ($url[0] == '/') {
                 $url = self::$baseUrl . $url;
             }
         }
@@ -429,11 +413,9 @@ class noxSystem
     public static function locationBack($str = "Перенаправление...")
     {
         $url = self::$fullUrl;
-        if (empty($_SERVER['HTTP_REFERER']) or ($_SERVER['HTTP_REFERER'] == ($url)))
-        {
+        if (empty($_SERVER['HTTP_REFERER']) or ($_SERVER['HTTP_REFERER'] == ($url))) {
             self::location('/', $str);
-        } else
-        {
+        } else {
             self::location($_SERVER['HTTP_REFERER'], $str);
         }
     }
@@ -442,27 +424,22 @@ class noxSystem
      * Переход по адресу через указанное кол-во времени
      *
      * @param string $url адрес для перехода
-     * @param int $time   время в секундах, спустя которое произойдет перенаправление
+     * @param int $time время в секундах, спустя которое произойдет перенаправление
      * @param string $str сообщение о перенаправлении
      */
     public static function locationAfterTime($url = '', $time = 5, $str = '')
     {
-        if ($url == '')
-        {
+        if ($url == '') {
             $url = self::$fullUrl;
-        } elseif (is_array($url))
-        {
+        } elseif (is_array($url)) {
             $url = self::$baseUrl . '/' . implode('/', $url);
-        } else
-        {
-            if ($url[0] == '/')
-            {
+        } else {
+            if ($url[0] == '/') {
                 $url = self::$baseUrl . $url;
             }
         }
         header("Refresh:{$time}; url=" . $url);
-        if ($str)
-        {
+        if ($str) {
             exit($str);
         }
     }
@@ -515,7 +492,7 @@ class noxSystem
      * @param int $user_id 0 для текущего пользователя
      * @return bool
      */
-    public static function userInGroup($group_id, $user_id=0)
+    public static function userInGroup($group_id, $user_id = 0)
     {
         return self::$userControl->userInGroup($group_id, $user_id);
     }
@@ -524,7 +501,7 @@ class noxSystem
      * Проверяет, имеет ли пользователь право
      *
      * @param string $module модуль, которому необходимо право
-     * @param string $right  идентификатор права
+     * @param string $right идентификатор права
      * @return bool
      */
     public static function haveRight($module, $right)
@@ -575,19 +552,17 @@ class noxSystem
 /**
  * Выводит или возвращает значение переменной в теге <pre>
  *
- * @param mixed $var   переменная
+ * @param mixed $var переменная
  * @param bool $return возвращать или выводить результат
  * @return string
  */
 function _d($var, $return = false)
 {
     $text = print_r($var, true);
-    if (!$return)
-    {
+    if (!$return) {
         $text = htmlspecialchars($text);
     }
-    if (!$return)
-    {
+    if (!$return) {
         echo '<pre class="debug">' . $text . '</pre>';
     }
     return $text;
@@ -601,42 +576,31 @@ function _d($var, $return = false)
  */
 function noxFormatBytes($bytes)
 {
-    if ($bytes < 1024)
-    {
+    if ($bytes < 1024) {
         return $bytes . ' B';
-    }
-    elseif ($bytes < 1048576)
-    {
+    } elseif ($bytes < 1048576) {
         return round($bytes / 1024, 2) . ' KB';
-    }
-    elseif ($bytes < 1073741824)
-    {
+    } elseif ($bytes < 1073741824) {
         return round($bytes / 1048576, 2) . ' MB';
-    }
-    elseif ($bytes < 1099511627776)
-    {
+    } elseif ($bytes < 1099511627776) {
         return round($bytes / 1073741824, 2) . ' GB';
-    }
-    else
-    {
+    } else {
         return round($bytes / 1099511627776, 2) . ' TB';
     }
 }
 
 /**
  * Возвращает параметр $var с приведением к типу $default и его значением
- * @param mixed $var     Параметр
+ * @param mixed $var Параметр
  * @param mixed $default Значение по-умолчанию
  * @return mixed
  */
 function getParam($var, $default = 0)
 {
     settype($var, gettype($default));
-    if (!$var)
-    {
+    if (!$var) {
         return $default;
-    } else
-    {
+    } else {
         return $var;
     }
 }
@@ -649,8 +613,7 @@ function getParam($var, $default = 0)
 function noxRealPath($path)
 {
     static $realpath = '';
-    if (!$realpath)
-    {
+    if (!$realpath) {
         $realpath = str_replace('\\', '/', realpath(dirname(__FILE__) . '/..')) . '/';
     }
 
@@ -658,7 +621,8 @@ function noxRealPath($path)
     return $realpath . $path;
 }
 
-function nox_error_handler($errno, $errstr, $file, $line) {
+function nox_error_handler($errno, $errstr, $file, $line)
+{
     $trace = debug_backtrace();
     $report = ['=== START ==='];
     $report[] = "Url: {$_SERVER['REQUEST_URI']};";
@@ -669,18 +633,17 @@ function nox_error_handler($errno, $errstr, $file, $line) {
     $report[] = "ERRSTR: $errstr;";
     $report[] = "FILE: {$file}:{$line}";
 
-    for($i = 1 , $l = count($trace); $i < $l; $i++)
-    {
-        if(!noxConfig::isProduction())
+    for ($i = 1, $l = count($trace); $i < $l; $i++) {
+        if (!noxConfig::isProduction())
             echo "FILE: {$file}:{$line} </br>";
         $item = $trace[$i];
         $log = $l - $i . ': ';
-        if(isset($item['file'])) {
+        if (isset($item['file'])) {
             $log .= $item['file'] . ':' . $item['line'];
         }
-        if(isset($item['function'])) {
+        if (isset($item['function'])) {
             $fn = $item['function'] . '(' . implode(', ', array_map('nox_error_handler_args_maker', $item['args'])) . ')';
-            if(isset($item['type']) && isset($item['object'])) {
+            if (isset($item['type']) && isset($item['object'])) {
                 $fn = get_class($item['object']) . $item['type'] . $fn;
             }
             $log .= ' ' . $fn;
@@ -695,9 +658,10 @@ function nox_error_handler($errno, $errstr, $file, $line) {
     error_log(implode("\n", $report));
 }
 
-function nox_error_handler_args_maker($x) {
+function nox_error_handler_args_maker($x)
+{
     $type = gettype($x);
-    switch($type) {
+    switch ($type) {
         case 'string':
             return "'{$x}'";
         case 'boolean':
@@ -710,13 +674,16 @@ function nox_error_handler_args_maker($x) {
     }
 }
 
-function gen($n){
-    $base = []; $cont = []; $out = '';
+function gen($n)
+{
+    $base = [];
+    $cont = [];
+    $out = '';
     $n = $n - strlen($out);
-    for($i = 48; $i <= 57; $i++) $base[] = $i;
-    for($i = 65; $i <= 90; $i++) $base[] = $i;
-    for($i = 97; $i <= 122; $i++) $base[] = $i;
-    for($i = 0; $i < rand(50, 100); $i++) $cont[] = $base[array_rand($base)];
-    for($i = 0; $i < $n; $i++) $out .= chr($cont[array_rand($cont)]);
+    for ($i = 48; $i <= 57; $i++) $base[] = $i;
+    for ($i = 65; $i <= 90; $i++) $base[] = $i;
+    for ($i = 97; $i <= 122; $i++) $base[] = $i;
+    for ($i = 0; $i < rand(50, 100); $i++) $cont[] = $base[array_rand($base)];
+    for ($i = 0; $i < $n; $i++) $out .= chr($cont[array_rand($cont)]);
     return $out;
 }
