@@ -153,7 +153,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="install env" />
-    <option name="LAST_COMMIT_MESSAGE" value="install env" />
+    <MESSAGE value="add gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="add gitignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
