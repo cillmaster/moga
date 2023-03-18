@@ -1,0 +1,29 @@
+s:1290:"<div style="margin-bottom: 16px;">Order blueprint using My Request form on the left. Fill the form, press the button and submit
+    your request. We will send you a proposal for its producing.</div>
+<?php if (@(isset($res) && $res)) { ?>
+    <div style="margin-bottom: 16px;">Or select existing request from the list.</div>
+    <?php echo @$pager; ?>
+    <table>
+        <thead>
+            <tr>
+                <th class="w16">&nbsp;</th>
+                <th class="text-left">Similar requests by users:</th>
+            </tr>
+        </thead>
+        <tbody class="pointer">
+        <?php if (isset($res) && $res) foreach ($res as $ar) { ?>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <a class="link__color-default link__undecoration display-block"
+                       href="<?php echo @$ar['url']; ?>" title="<?php echo @$ar['title']; ?> blueprint request" <?php if (@($ar['vector'])) { ?>rel="nofollow"<?php } ?>><?php echo @$ar['title']; ?></a>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php echo @$pager;  } else { ?>
+    <div style="margin-bottom: 16px;">We have not found any similar requests. Submit your own request or change filters
+        in My Request form.</div>
+<?php } ?>
+";

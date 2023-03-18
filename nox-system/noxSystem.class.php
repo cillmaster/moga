@@ -264,6 +264,7 @@ class noxSystem
             //Создаем объект управления пользователями
             self::$userControl = new noxUserControl();
 
+            require_once(noxRealPath('nox-modules/payment/lib/models/paymentCart.model.php'));
             self::$cart = new paymentCartModel();
             self::$cartItems = self::$cart->getCartDetails();
 

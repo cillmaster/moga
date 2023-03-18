@@ -1,0 +1,88 @@
+s:4230:"<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+                <?php if (isset($breadcrumbs) && $breadcrumbs) foreach ($breadcrumbs as $index=>$crumb) { ?>
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <a itemprop="item" href="<?php echo @$crumb['url']; ?>" title="<?php echo @$crumb['title']; ?>" class="crumb"><span itemprop="name"><?php echo @$crumb['name']; ?></span></a>
+                    <meta itemprop="position" content="<?php echo @$index+1; ?>" />
+                </li>
+                <?php } ?>
+            </ol>
+            <h1 class="caption"><?php echo @$caption; ?></h1>
+            <br>
+            <div style="font-size: 18px;">Download free car blueprints and full-size bitmaps. Outlines helps designers
+                and 3d artists to find the best car blueprint for car wrap and 3d modeling. Use images for design
+                of car, wrapping, vinyl graphics and vehicle branding.</div>
+            <br/>
+            <div>
+                <div class="fb-like" data-href="<?php echo @$canonical; ?>" data-width="" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+                &nbsp;&nbsp;&nbsp;
+                <a href="/nox-data/vector/free/opel-corsa-c-3-door-2000.pdf" target="_blank"
+               title="PDF Example">See PDF Example</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <h3>Premium Vector Blueprints</h3>
+            <div>If you need editable vector blueprints in fine quality go to<br>
+                <a href="/car-vector-drawings" title="Car vector blueprints">Car vector blueprints</a>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div style="border-bottom: 1px solid #e2e2e2;" class="container_12">
+        <div class="grid_6 grid_first">
+            <?php if (@($titleVector['set'])) { ?>
+            <?php echo @printsSetModel::viewSetPreview($titleVector, false, 'large'); ?>
+            <?php } else { ?>
+            <?php echo @printsVectorModel::viewVectorPreview($titleVector, false, 'large'); ?>
+            <?php } ?>
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        <?php if (isset($relVectors) && $relVectors) foreach ($relVectors as $v) { ?>
+        <div class="grid_3">
+            <?php if (@($v['set'])) { ?>
+            <?php echo @printsSetModel::viewSetPreview($v); ?>
+            <?php } else { ?>
+            <?php echo @printsVectorModel::viewVectorPreview($v); ?>
+            <?php } ?>
+            <p style="padding-bottom: 6px">&nbsp;</p>
+        </div>
+        <?php } ?>
+    </div>
+    <br><br>
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <h3>Free Car Blueprints</h3>
+            <div>Select automaker category below. If you need blueprints of planes, ships,
+                heavy equipment, smartphones etc. go to
+                <a href="/blueprints" title="Other types of blueprints ">Other types of blueprints </a>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="container_12">
+        <div style="border-bottom: none;" class="main-top-cars-cont">
+            <div style="padding-bottom: 0;" class="top-cars-cont container-row">
+                <?php $r = ceil(count($makeCars) / 6) - 1; ?>
+                <?php for ($i=0; $i<=5; $i++) { ?>
+                <div class="top-cars-col">
+                    <?php for ($j=0; $j<=$r; $j++) { ?>
+                    <?php $ind = $i * ($r + 1) + $j; ?>
+                    <?php if (@(isset($makeCars[$ind]))) { ?>
+                    <?php $m = $makeCars[$ind]; ?>
+                    <a href="/car-blueprints/<?php echo @$m['url']; ?>" title="<?php echo @$m['name']; ?> blueprints"><?php echo @$m['name']; ?></a>
+                    <?php } ?>
+                    <?php } ?>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+";

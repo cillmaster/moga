@@ -1,0 +1,4 @@
+s:163:"<?php if (isset($res) && $res) foreach ($res as $ar) { ?>
+    <option value="<?php echo @$ar['name']; ?>" data-id="<?php echo @$ar['id']; ?>"></option>
+<?php } ?>
+";

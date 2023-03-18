@@ -1,0 +1,126 @@
+s:5607:"<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_6 grid_first">
+            <h1 class="caption">Get car blueprints and vector drawings.</h1>
+            <br>
+            <div style="font-size: 18px;">We offer templates for car wrap and 3d design. Download it in ready-to-use editable premium quality. Or request any blueprint.</div>
+            <br>
+        </div>
+        <div class="grid_6" style="text-align: center; padding-top: 30px;">
+            <img src="/nox-themes/default/images/prepay-icon100.png" width="81" height="104">
+        </div>
+    </div>
+</div>
+<br>
+<div class="content">
+    <div class="container_12">
+        <div class="grid_4 grid_first start-card start-blueprints">
+            <div class="start-tag">GET STARTED</div>
+            <div class="start-header">Free Blueprints</div>
+            <div class="start-text">Create an account and download free raster bitmap blueprints with no limit.
+                Upgrade it to premium at any time.</div>
+            <a href="/car-blueprints" title="Free car blueprints">Blueprint Free Catalog</a>
+        </div>
+        <div class="grid_4 start-card start-vectors">
+            <div class="start-tag">GET STARTED</div>
+            <div class="start-header">Vector Drawings</div>
+            <div class="start-text">Buy ready editable vector blueprints. Or order blueprint, make pre-payment and
+                get it ready in up to 4 work days.</div>
+            <a href="/car-vector-drawings" title="Car blueprints and vector drawings">Car Vector Blueprints</a>
+        </div>
+        <div class="grid_4 start-card start-requests">
+            <div class="start-tag">GET STARTED</div>
+            <div class="start-header">Request and Order</div>
+            <div class="start-text">If you have not found blueprint. Request any and we will estimate a price of
+                its production. Then you can order it.</div>
+            <a href="/requests" title="Request blueprint of a car">Request Form</a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container_12">
+    <h3>Popular Blueprint Categories</h3>
+    <div class="main-top-cars-cont">
+        <div data-mode="top" class="top-cars-cont container-row">
+            <?php $r = ceil(count($makeTopCars) / 6) - 1; ?>
+            <?php for ($i=0; $i<=5; $i++) { ?>
+            <div class="top-cars-col">
+                <?php for ($j=0; $j<=$r; $j++) { ?>
+                <?php $ind = $i * ($r + 1) + $j; ?>
+                <?php if (@(isset($makeTopCars[$ind]))) { ?>
+                <?php $m = $makeTopCars[$ind]; ?>
+                <a href="/car-blueprints/<?php echo @$m['url']; ?>" title="<?php echo @$m['name']; ?> blueprints"><?php echo @$m['name']; ?></a>
+                <?php } ?>
+                <?php } ?>
+            </div>
+            <?php } ?>
+        </div>
+        <div data-mode="all" class="top-cars-cont container-row">
+            <?php $r = ceil(count($makeCars) / 6) - 1; ?>
+            <?php for ($i=0; $i<=5; $i++) { ?>
+            <div class="top-cars-col">
+                <?php for ($j=0; $j<=$r; $j++) { ?>
+                <?php $ind = $i * ($r + 1) + $j; ?>
+                <?php if (@(isset($makeCars[$ind]))) { ?>
+                <?php $m = $makeCars[$ind]; ?>
+                <a href="/car-blueprints/<?php echo @$m['url']; ?>" title="<?php echo @$m['name']; ?> blueprints"><?php echo @$m['name']; ?></a>
+                <?php } ?>
+                <?php } ?>
+            </div>
+            <?php } ?>
+        </div>
+        <div class="top-cars-oper">
+            <div id="show-all-cars" class="btn hover">Show All Makes&nbsp;&nbsp;
+                <img src="/nox-themes/default/images/show-arrow.png" width="16" height="11" alt="Show">
+            </div>
+        </div>
+    </div>
+    <h3>Featured Drawings:</h3>
+    <?php $i = 0; ?>
+    <?php if (isset($relVectors) && $relVectors) foreach ($relVectors as $v) { ?>
+    <div class="grid_3<?php if (@($i%4 === 0)) { ?> grid_first<?php } ?>">
+        <?php $i++; ?>
+        <?php echo @printsVectorModel::viewVectorPreview($v); ?>
+        <p style="padding-bottom: 6px">&nbsp;</p>
+    </div>
+    <?php } ?>
+</div>
+<?php if (@(isset($confirm_email))) { ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('msg', 'registration_success', '<?php if (@(($confirm_email != "true"))) {  echo @$confirm_email;  } ?>');
+    })
+</script>
+<?php }  if (@(isset($confirm_email_fb))) { ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('msg', 'confirm_email_fb', '<?php if (@(($confirm_email_fb != "true"))) {  echo @$confirm_email_fb;  } ?>');
+    })
+</script>
+<?php }  if (@(isset($reset_pass))) { ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('reset_pass_2');
+        document.getElementById('resetPassUserID').setAttribute('value', '<?php echo @$reset_pass; ?>')
+    })
+</script>
+<?php }  if (@(isset($reset_pass_fin))) { ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('msg', 'reset_pass', '<?php if (@(($reset_pass_fin != "true"))) {  echo @$reset_pass_fin;  } ?>');
+    })
+</script>
+<?php }  if (@(isset($unsubscribe))) { ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        windows.open('msg', 'unsubscribe');
+    })
+</script>
+<?php } ?>
+<script>
+    var showAll = document.getElementById('show-all-cars');
+    showAll && showAll.addEventListener('click', function () {
+        document.body.setAttribute('cars-main', 'all');
+    })
+</script>
+";

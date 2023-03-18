@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '2cc7bb6a338b05badbc9aa2e635388ccbd7dfc28',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '2cc7bb6a338b05badbc9aa2e635388ccbd7dfc28',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'facebook/graph-sdk' => array(
+            'pretty_version' => '5.1.4',
+            'version' => '5.1.4.0',
+            'reference' => '38fd7187a6704d3ab14ded2f3a534ac4ee6f3481',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../facebook/graph-sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'facebook/php-ads-sdk' => array(
+            'pretty_version' => '3.2.13',
+            'version' => '3.2.13.0',
+            'reference' => '13e055ffa3736130b45ced608cdc9610fc36f1f3',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../facebook/php-ads-sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
