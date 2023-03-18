@@ -1,0 +1,47 @@
+<div class="window" id="js-window__reg_email">
+    <div class="frame">
+        <div class="title">Register with Email
+            <span class="note">or <a class="js-popup" href="#" data-wid="reg_main">go back</a></span>
+        </div>
+        <div class="content">
+            <div class="note" style="margin-bottom: 16px;">Create your account with an email.</div>
+            <form method="post" action="/users/registration">
+                <div class="form-item">
+                    <input class="w100p" name="registration[email]"
+                           pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-‌​9-]+)*"
+                           placeholder="Email address*" required>
+                </div>
+                <div class="form-item">
+                    <input class="w100p" name="registration[name]" placeholder="Your name*" required>
+                </div>
+                <div class="form-item">
+                    <input class="w100p" name="registration[password]" type="password"
+                           pattern="[a-zA-Z0-9]{6,}"
+                           placeholder="Password*" required>
+                    <label class="f12 text-color-note">Password must be at least 6 characters long</label>
+                </div>
+                <div class="form-item">
+                    <input class="w100p" name="confirm-password" type="password"
+                           pattern="[a-zA-Z0-9]{6,}"
+                           placeholder="Re-type password*" required>
+                </div>
+                <div class="form-item form-item-submit text-center">
+                    <input class="btn violet" name="submit-auth" type="submit" value="Create account">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="close"></div>
+</div>
+<script>
+    $('#js-window__reg_email').find('form').ajaxForm(
+            function(res) {
+                windows.open('msg', res.message);
+            },
+            function(a) {
+                let x = JSON.parse(a.responseText);
+                console.log(a.responseText);
+                alert(x.error);
+            }
+    )
+</script>

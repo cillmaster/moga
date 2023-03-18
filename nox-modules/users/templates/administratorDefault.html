@@ -1,0 +1,89 @@
+<div class="filter-panel">
+    <form method="get" name="user" action="{$url}">
+        Поиск по:
+        {eval $ar = ['email', 'name', 'id'];}
+        {foreach $ar as $key=>$value}
+        <input id="st{$key}" type="radio" name="search_type" value="{$key}"{if $_GET[search_type] == $key} checked{end}>
+        <label for="st{$key}">{$value}</label>
+        {end}
+        &nbsp;&nbsp;<input type="search" name="search" value="{$_GET[search]}" placeholder="Поиск по {$type}">
+        <input type="checkbox" name="payment"{if isset($payment)} checked{end}>$
+        <a href="/administrator/users">показать всех</a>
+    </form>
+</div>
+<script>
+    (function () {
+        var form = document.forms.user,
+            type = form.search_type,
+            search = form.search,
+            payment = form.payment;
+        type.addEventListener('change', function () {
+            if(search.value === '') {
+                search.setAttribute('placeholder', 'Поиск по ' + type.options[type.selectedIndex].text);
+            } else {
+                form.submit();
+            }
+        })
+        payment.addEventListener('click', function () {
+            search.value = '';
+            form.submit();
+        });
+    })();
+</script>
+{$pager}
+<table class="ruler">
+    <thead>
+        <tr>
+            <th>ID</th>
+            {if isset($payment)}<th colspan="2">$</th>{end}
+            <th colspan="2">Имя</th>
+            <th class="w250">Email</th>
+            <th class="w250">Дата регистрации</th>
+            <th>IP</th>
+            <th>lng</th>
+            <th class="w250">Группы пользователя</th>
+            <th class="w150">Действия</th>
+        </tr>
+        <tr>
+            <th colspan="{if isset($payment)}11{else}9{end}"><a class="inline-block w100p add" title="Добавить" href="?section=administrator&action=add"></a></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th colspan="{if isset($payment)}11{else}9{end}"><a class="inline-block w100p add" title="Добавить" href="?section=administrator&action=add"></a></th>
+        </tr>
+    </tfoot>
+    <tbody>
+    {foreach $res as $ar}
+    <tr>
+        <td>{$ar[id]}</td>
+        {if isset($payment)}
+            <td class="text-center">{$ar[p_count]}</td>
+            <td class="text-right">{$ar[p_sum]}</td>
+        {end}
+        <td>{strtoupper(substr($ar[user_type], 0, 1))}</td>
+        <td><a href="?section=administrator&action=profile&id={$ar[id]}" class="ajax" title="Profile">{if $ar[name]}{$ar[name]}{else}{'no'}{end}</a></td>
+        <td class="text-center"><a href="mailto:{$ar[email]}" class="block-gray">&lt;{$ar[email]}&gt;</a></td>
+        <td class="text-center">{noxDate::toDateTime($ar[registration_date])}</td>
+        <td class="text-center">{if isset($ar[prm][ip])}{$ar[prm][ip]}{end}</td>
+        <td class="text-center">{if isset($ar[prm][lng])}{$ar[prm][lng]}{end}</td>
+        <td class="text-center">
+            {foreach $userGroups[$ar[id]] as $gid}
+            {$groups[$gid]} |
+            {end}
+        </td>
+        <td>
+            <a href="?section=administrator&action=profile&id={$ar[id]}"
+               title="Profile">Profile</a>
+            <a href="?section=administrator&action=edit&id={$ar[id]}" class="inline-block edit"
+               title="Редактировать"></a>
+            <a href="?section=administrator&action=delete&id={$ar[id]}" class="inline-block delete"
+               title="Удалить"></a>
+            <a href="?section=administrator&action=add&id={$ar[id]}" class="inline-block copy"
+               title="Копировать"></a>
+        </td>
+    </tr>
+    {end}
+    </tbody>
+</table>
+{$pager}

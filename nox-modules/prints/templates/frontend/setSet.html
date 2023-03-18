@@ -1,0 +1,63 @@
+<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+        <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+            {foreach $breadcrumbs as $index=>$crumb}
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{$crumb[url]}" title="{$crumb[title]}" class="crumb"><span itemprop="name">{$crumb[name]}</span></a>
+                <meta itemprop="position" content="{$index+1}" />
+            </li>
+            {end}
+        </ol>
+        <div class="caption">
+            <h1 class="inline-block">{$set[name_full]} {$seoUrl[typeTitle]}</h1>
+            {if $subCategory}&nbsp;&nbsp;&nbsp;&nbsp;<a class="color-cyan small" href="/{$category[url]}-vector-drawings/{$subCategory[url]}" title="{$subCategory[name]} drawings and vector blueprints">All {$subCategory[name]} {$seoUrl[typeTitle]}</a>{end}
+        </div>
+        <br>
+        <div style="font-size: 18px;">Purchase {$set[name_full]} {$seoUrl[typeTitle]} in premium quality. We offer
+            vector blueprints in PDF, EPS, AI and other file formats. Download it now and use editable
+            {$set[name_full]} templates for wrap design, 3d modeling and other purposes.
+        </div>
+        <br>
+        <div style="font-size: 18px;">Use <a href="/search?q={$set[name_search]}" title="Search All {$set[name_full]} blueprints" target="_blank">Search</a> for more blueprints.</div>
+        <br/>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <br>
+        <br>
+        <div class="grid_3 grid_first js_column-scroll">
+            <div id="sc" data-os="320" class="scroll-wrapper">
+                <div data-ng-include="'/nox-themes/default/templates/app/need-request.html'"></div>
+                <div class="hr"></div>
+                {Prints::HTML_ICON_VECTOR}
+                <p>Purchase and download these ready editable premium blueprints and scalable drawings.</p>
+                <br/>
+                {Prints::HTML_ICON_PREPAY}
+                <p>These items are approved to be made after your pre-order. Make payment and get this vector
+                    blueprint in 1-{noxSystem::$prepayMaxDays} work days.</p>
+            </div>
+            &nbsp;
+        </div>
+        <div id="mc" style="margin-left: 20px; width: 698px;" class="grid_9">
+            {eval $i = 0}
+            {foreach $vectors as $v}
+            {if $i}
+            <div class="grid_4{if $i%3 === 0} grid_first{end}">
+                {eval $i++}
+                {printsVectorModel::viewVectorPreview($v, $seoUrl[typeUrl])}
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            {else}
+            <div class="grid_8 grid_first">
+                {eval $i++}
+                {printsVectorModel::viewVectorPreview($v, false, 'large')}
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            {end}
+            {end}
+        </div>
+    </div>
+</div>

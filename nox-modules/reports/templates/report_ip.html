@@ -1,0 +1,27 @@
+<style>
+    table td, table th{
+        text-align: center;
+    }
+</style>
+<table class="ruler" width="600px">
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $res as $key=>$value}
+    <tr>
+        <td>{$key}</td>
+        <td>{$value}</td>
+    </tr>
+    {end}
+    {foreach $res2 as $key=>$value}
+    <tr>
+        <td>{$key}</td>
+        <td>{$value}</td>
+    </tr>
+    {end}
+    </tbody>
+</table>

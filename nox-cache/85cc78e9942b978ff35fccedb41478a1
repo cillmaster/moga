@@ -1,0 +1,176 @@
+s:10183:"<div class="pre-content">
+    <div class="container_12">
+        <div class="grid_8 grid_first">
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+                <?php if (isset($breadcrumbs) && $breadcrumbs) foreach ($breadcrumbs as $index=>$crumb) { ?>
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                    <a itemprop="item" href="<?php echo @$crumb['url']; ?>" title="<?php echo @$crumb['title']; ?>" class="crumb"><span itemprop="name"><?php echo @$crumb['name']; ?></span></a>
+                    <meta itemprop="position" content="<?php echo @$index+1; ?>" />
+                </li>
+                <?php } ?>
+            </ol>
+            <h1 class="caption"><?php echo @$caption; ?></h1>
+            <br>
+            <div style="font-size: 18px;"><?php echo @$desc; ?></div>
+            <br/>
+            <div>
+                <div class="fb-like" data-href="<?php echo @$url; ?>" data-width="" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+                &nbsp;&nbsp;&nbsp;
+                <a href="/nox-data/vector/free/opel-corsa-c-3-door-2000.pdf" target="_blank"
+                   title="PDF Example">See PDF Example</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <div class="container_12">
+            <div class="grid_8 grid_first">
+                <h3>Premium Vector Blueprints</h3>
+                <div>If you need editable vector blueprints in fine quality go to<br>
+                    <a href="/car-vector-drawings/<?php echo @$subCategory['url']; ?>" title="<?php echo @$subCategory['name']; ?> vector blueprints"><?php echo @$subCategory['name']; ?> vector blueprints</a>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid #e2e2e2;" class="container_12">
+            <?php if (@(isset($titleVector))) { ?>
+            <div class="grid_6 grid_first">
+                <?php if (@($titleVector['set'])) { ?>
+                <?php echo @printsSetModel::viewSetPreview($titleVector, false, 'large'); ?>
+                <?php } else { ?>
+                <?php echo @printsVectorModel::viewVectorPreview($titleVector, false, 'large'); ?>
+                <?php } ?>
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            <?php if (isset($relVectors) && $relVectors) foreach ($relVectors as $v) { ?>
+            <div class="grid_3">
+                <?php if (@($v['set'])) { ?>
+                <?php echo @printsSetModel::viewSetPreview($v); ?>
+                <?php } else { ?>
+                <?php echo @printsVectorModel::viewVectorPreview($v); ?>
+                <?php } ?>
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            <?php } ?>
+            <?php } ?>
+        </div>
+        <br><br>
+        <div id="pageScrollTo" class="container_12">
+            <div class="grid_8 grid_first">
+                <h3>All <?php echo @$subCategory['name']; ?> Blueprints</h3>
+                <div>This list includes free <?php echo @$subCategory['name']; ?> blueprints, available as raster bitmap images.
+                    Login to download it in maximum quality and resolution available with no limit. Also we
+                    show here other <?php echo @$subCategory['name']; ?> items, such as vectors, prepays and user requests.</div>
+                <br/><br/>
+            </div>
+        </div>
+        <div class="container_12">
+            <div class="grid_3 grid_first js_column-scroll">
+                <div id="sc" data-os="<?php if (@(isset($titleVector))) { ?>1126<?php } else { ?>570<?php } ?>" class="scroll-wrapper">
+                    <h3>Filter:</h3>
+                    <p>Fill one or few filters to search</p>
+                    <form method="get" action="<?php echo @$url; ?>">
+                        <div class="search-form-block">
+                            <input type="hidden" name="search[category]" value="<?php echo @$category['id']; ?>">
+                            <?php if (@($subCategoryName)) { ?><input type="hidden" name="search[<?php echo @$subCategoryName; ?>]" value="<?php echo @$subCategory['id']; ?>"><?php } ?>
+                            <div class="form-item">
+                                <input class="input js-input-requires" name="search[name]" placeholder="Name" value="<?php if (@(isset($search['params']['name']))) {  echo @$search['params']['name'];  } ?>" required>
+                            </div>
+                            <div class="form-item">
+                                <input class="input js-input-requires" name="search[year]" placeholder="Year" value="<?php if (@(isset($search['params']['year']))) {  echo @$search['params']['year'];  } ?>">
+                            </div>
+                            <div class="form-item">
+                                <input class="btn brown" type="submit" name="search-submit" value="Show results">
+                                <?php if (@(isset($search))) { ?>
+                                &nbsp;<a href="<?php echo @noxSystem::$actionUrl; ?>" rel="nofollow">Clear filter (x)</a>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="hr"></div>
+                    <div data-ng-include="'/nox-themes/default/templates/app/need-request-2.html'"></div>
+                    <div class="hr"></div>
+                    <?php echo @Prints::HTML_ICON_VECTOR; ?>
+                    <p>Purchase and download premium ready-to-use editable blueprints.</p>
+                    <br/>
+                    <?php echo @Prints::HTML_ICON_PREPAY; ?>
+                    <p>Order and we will make it. Make pre-payment and get this vector blueprint in 1-<?php echo @noxSystem::$prepayMaxDays; ?> work days.</p>
+                    <br/>
+                    <?php echo @Prints::HTML_ICON_VECTOR_REQUEST; ?>
+                    <p>Requested by users. We have not estimated price and feasibility to make it. Press Want button
+                        and we send a prepay quotation for you.</p>
+                </div>
+                &nbsp;
+            </div>
+            <div id="mc" class="grid_9">
+                <?php if (@(isset($search))) { ?>
+                <h3 class="inline-block">Filter Results in <?php echo @$sectionMainName; ?>.</h3>&nbsp;&nbsp;<a href="<?php echo @noxSystem::$actionUrl; ?>">Show all <?php echo @$sectionMainName; ?> blueprints</a>
+                <?php echo @$pager; ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w16">&nbsp;</th>
+                            <th class="text-left">Model</th>
+                            <th class="text-center" style="width: 60px;">Views</th>
+                        </tr>
+                    </thead>
+                    <tbody class="pointer">
+                    <?php if (isset($search['result']) && $search['result']) foreach ($search['result'] as $ar) { ?>
+                        <tr>
+                            <td class="copyright"></td>
+                            <td>
+                                <a class="link__color-default link__undecoration display-block" href="<?php echo @$ar['url']; ?>" title="<?php echo @$ar['full_name']; ?> blueprints">
+                                    <?php echo @$ar['full_name']; ?>&nbsp;<?php echo @$ar['tag']; ?>
+                                </a>
+                            </td>
+                            <td class="text-center has-hint" title="This shows available VIews such as Front, Top, Rear, Side views. Buy vector blueprints and get all 4 views of this car.">
+                                <?php echo @Views::getViewsInHtml($ar['views']); ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+                <?php echo @$pager; ?>
+                <?php } else { ?>
+                <?php echo @$pager; ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w16">&nbsp;</th>
+                            <th class="text-left">Model</th>
+                            <th class="text-center" style="width: 60px;">Views</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php if (isset($blueprints) && $blueprints) foreach ($blueprints as $id=>$bp) { ?>
+                    <tr>
+                        <td class="copyright"></td>
+                        <td>
+                            <a class="link__color-default link__undecoration display-block" href="<?=Prints::createUrlForItem($bp, $bp['type']);?>" title="<?php echo @$bp['full_name']; ?> <?php echo @$bp['seo']; ?>">
+                                <?php echo @$bp['full_name']; ?>&nbsp;<?php echo @$bp['tag']; ?>
+                            </a>
+                        </td>
+                        <td class="text-center has-hint" title="This shows available VIews such as Front, Top, Rear, Side views. Buy vector blueprints and get all 4 views of this car.">
+                            <?php if (@(!empty($bp['views']))) { ?>
+                            <?php echo @Views::getViewsInHtml($bp['views']); ?>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+                <?php echo @$pager; ?>
+                <?php } ?>
+                <p>&nbsp;</p>
+                <h3>Can't find the right blueprint?</h3>
+                <p style="padding-bottom: 8px">Just request it now and get in a few days!</p>
+                <p>
+                    <a class="btn btn-active" href="/requests">Request <?php echo @$subCategory['name']; ?> blueprint</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+";

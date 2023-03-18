@@ -1,0 +1,77 @@
+s:3389:"<!DOCTYPE HTML>
+<html lang="<?php echo @$locale; ?>">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex"/>
+    <title><?php echo @$title; ?> - <?php echo @$siteTitle; ?></title>
+    <link rel="stylesheet" type="text/css" href="<?php echo @$commonFolder; ?>/css/framework.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo @$themeFolder; ?>/css/common.css"/>
+
+    <link rel="stylesheet" href="<?php echo @$themeFolder; ?>/js/elrte/css/smoothness/jquery-ui-1.8.13.custom.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="<?php echo @$themeFolder; ?>/js/elrte/css/elrte.min.css" type="text/css" media="screen" charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo @$themeFolder; ?>/css/jquery.datepick.css"/>
+
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="<?php echo @$commonFolder; ?>/js/jquery.js"></script>
+    <script type="text/javascript" src="<?php echo @$themeFolder; ?>/js/jquery.datepick.min.js"></script>
+    <script type="text/javascript" src="<?php echo @$commonFolder; ?>/js/framework.js"></script>
+    <script type="text/javascript" src="<?php echo @$themeFolder; ?>/js/common.js"></script>
+    <script type="text/javascript" src="<?php echo @$themeFolder; ?>/js/table.js"></script>
+    <script type="text/javascript" src="<?php echo @$themeFolder; ?>/js/tree.js"></script>
+    <script type="text/javascript" src="<?php echo @$themeFolder; ?>/js/test.js"></script>
+
+    <script src="<?php echo @$themeFolder; ?>/js/elrte/js/jquery-ui-1.8.13.custom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="<?php echo @$themeFolder; ?>/js/elrte/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="<?php echo @$themeFolder; ?>/js/elrte/js/i18n/elrte.ru.js" type="text/javascript" charset="utf-8"></script>
+
+    <?php echo @$head; ?>
+</head>
+<body>
+<header>
+    <nav class="main-menu left"><?php 
+$blocks = noxConfig::getBlocks();
+if (isset($blocks['admin-menu']))
+{
+$block = $blocks['admin-menu'];
+$actionName = @$block['module'].ucfirst(@$block['section']).ucfirst(@$block['action']).'Action';
+
+$initPath = noxRealPath('nox-modules/' . @$block['module'] . '/lib/config/init.php');
+            //Проверяем, существует ли файл инициализации
+            if (file_exists($initPath))
+            {
+                    include_once($initPath);
+            }
+
+if (class_exists($actionName, true))
+{
+$action = new $actionName();
+                $action->params['block'] = true;
+
+$action->run();
+} else
+{
+    $actionName = $block['module'].ucfirst($block['section']).'Actions';
+    if (class_exists($actionName, true))
+                {
+                    $action = new $actionName();
+            
+                    $action->run($block['action']);
+                }
+}
+} ?></nav>
+    <nav class="main-menu right">
+        <ul>
+            <li><a href="<?php echo @$baseUrl; ?>/">На сайт</a></li>
+            <li><a href="<?php echo @$baseUrl; ?>/users/logout">Выйти</a></li>
+        </ul>
+    </nav>
+</header>
+<section>
+    <h2><?php echo @$caption; ?></h2>
+    <?php echo @$content; ?>
+</section>
+</body>
+</html>";

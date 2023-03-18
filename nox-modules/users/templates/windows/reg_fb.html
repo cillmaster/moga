@@ -1,0 +1,22 @@
+<div class="window" id="js-window__reg_fb">
+    <div class="frame">
+        <div class="title">Register with FB
+            <span class="note">or <a class="js-popup" href="#" data-wid="reg_main">go back</a></span>
+        </div>
+        <div class="content">
+            <div class="note" style="margin-bottom: 16px;">Enter your email address to receive personal notifications.</div>
+            <form method="post" name="reg_fb" action="/users/registration">
+                <input type="hidden" name="registration[check-email-only]">
+                <div class="form-item">
+                    <input class="w100p" name="registration[email]"
+                           pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-‌​9-]+)*"
+                           placeholder="Email" required>
+                </div>
+                <div class="form-item form-item-submit text-center">
+                    <input class="btn violet" name="submit-auth" type="submit" value="Create account">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="close"></div>
+</div>

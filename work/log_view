@@ -1,0 +1,24 @@
+[Tue Apr 04 18:47:09.987974 2017] [:error] [pid 9762] [client 46.101.35.247:37804]
+PHP Notice:  Undefined index: HTTP_REFERER in /home/ol/web/getoutlines.com/public_html/nox-system/noxSystem.class.php on line 645
+
+[Tue Apr 04 18:47:09.988048 2017] [:error] [pid 9762] [client 46.101.35.247:37804]
+=== START ===\n
+Url: /download/blueprint/210;\n
+Method: GET;\n
+Referer: ;\n
+-----------------------------------\n
+ERRNO: 2;\n
+ERRSTR: finfo_file(/home/ol/web/getoutlines.com/public_html/blueprints/car/audi/audi-80-coupe-1995.gif): failed to open stream: No such file or directory;\n
+FILE: /home/ol/web/getoutlines.com/public_html/nox-modules/download/lib/actions/frontend/downloadDownloadDefault.action.php:27\n
+7: /home/ol/web/getoutlines.com/public_html/nox-modules/download/lib/actions/frontend/downloadDownloadDefault.action.php:27
+finfo_file('[resource]', '/home/ol/web/getoutlines.com/public_html/blueprints/car/audi/audi-80-coupe-1995.gif', 16)\n
+6: /home/ol/web/getoutlines.com/public_html/nox-system/action/noxAction.class.php:177 downloadDownloadDefaultAction->execute()\n
+5: /home/ol/web/getoutlines.com/public_html/nox-system/application/noxApplication.class.php:303 downloadDownloadDefaultAction->run()\n
+4: /home/ol/web/getoutlines.com/public_html/nox-system/application/noxApplication.class.php:348 application->runAction()\n
+3: /home/ol/web/getoutlines.com/public_html/nox-config/application.class.php:17 application->run()\n
+2: /home/ol/web/getoutlines.com/public_html/nox-system/noxSystem.class.php:357 application->run()\n
+1: /home/ol/web/getoutlines.com/public_html/index.php:11 run()\n
+\n
+Array\n
+(\n
+    [Host] => getoutlines.com\n    [X-Real-IP] => 46.229.168.72\n    [X-Forwarded-For] => 46.229.168.72\n    [Connection] => close\n    [User-Agent] => Mozilla/5.0 (compatible; SemrushBot/1.2~bl; +http://www.semrush.com/bot.html)\n    [Accept-Encoding] => gzip,deflate\n    [Accept] => */*\n)\n\n=== END ===

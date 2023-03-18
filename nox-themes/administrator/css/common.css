@@ -1,0 +1,454 @@
+/*
+Общие стили панели администратора
+*/
+
+.gray { color: #9b9b9b !important; }
+.green { color: #009b00 !important; }
+.red { color: #ff2222; }
+.white { color:#fff !important; }
+.black { color:#000 !important; }
+
+.w16 { width: 16px; }
+.w50 { width: 50px; }
+.w100 { width: 100px; }
+.w200 { width: 200px; }
+.w500 {width: 500px;}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Calibri, Arial;
+}
+
+body {
+    padding-top:32px;
+}
+img {
+    max-height: 100%;
+    max-width: 100%;
+}
+header {
+    width: 100%;
+    height: 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: url('../images/menu-background.png');
+    border-bottom: 1px solid #ccc;
+    z-index: 2;
+}
+
+nav.main-menu ul {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+nav.main-menu > ul > li {
+    display: inline-block;
+    list-style: none;
+    position: relative;
+    border-left: 1px solid #666;
+}
+
+nav.main-menu > ul > li:last-child {
+    border-right: 1px solid #666;
+}
+
+nav.main-menu > ul > li:hover > ul {
+    display: block;
+}
+
+nav.main-menu > ul > li > ul {
+    display: none;
+    position: absolute;
+    left: -1px;
+    top: 32px;
+    min-width: 100%;
+    border: 1px solid #bbb;
+    border-top: none;
+    background: url('../images/menu-background.png');
+}
+
+nav.main-menu > ul > li ul li {
+    position: relative;
+    list-style: none;
+    border-top: 1px solid #666;
+}
+
+nav.main-menu ul li a {
+    display: block;
+    padding: 0px 10px;
+    line-height: 32px;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+nav.main-menu ul li > a:hover, nav.main-menu ul li.active > a, nav.main-menu > ul > li:hover > a {
+    background: #3c3c3c;
+}
+
+nav.main-menu ul li ul li a {
+    padding: 0px 25px;
+}
+
+nav.main-menu ul li ul li a:hover, nav.main-menu ul li ul li.active > a {
+    background: #3c3c3c url('../images/arrow.png') 10px no-repeat;
+}
+
+nav.main-menu ul li ul li ul li a {
+    font-size: 90%;
+    line-height: 25px;
+    padding-left: 45px;
+}
+
+nav.main-menu ul li ul li ul li a:hover, nav.main-menu ul li ul li ul li.active > a {
+    background-position: 30px;
+}
+
+section {
+    padding: 10px 10px;
+}
+
+.text-editor {
+    display: block;
+    width: 100%;
+    min-width: 600px;
+    height: 300px;
+    font-size: 14px;
+}
+
+.loading, .ok, .error {
+    background-image: url('../images/loading.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ok {
+    background-image: url('../images/ok.png');
+}
+
+.error {
+    background-image: url('../images/error.png');
+}
+
+.inline-block {
+    vertical-align: middle;
+}
+
+.inline-block.edit, .inline-block.on, .inline-block.off, .inline-block.delete, .inline-block.add, .inline-block.copy, .inline-block.update, .inline-block.up, .inline-block.down {
+    min-height: 16px;
+    margin: 5px 5px;
+    padding-left:20px;
+    background-position: 0% 50%;
+}
+.w100 {
+    width:100px !important;
+}
+
+.extlink {
+    background: url('../images/b_link.png') no-repeat;
+    margin-right: 10px;
+    padding-left: 20px;
+}
+
+.edit {
+    background: url('../images/b_edit.png') center  no-repeat;
+}
+
+.on {
+    background: url('../images/b_on.png') center  no-repeat;
+}
+
+.off {
+    background: url('../images/b_off.png') center  no-repeat;
+}
+
+.delete {
+    background: url('../images/b_delete.png')  center no-repeat;
+}
+
+.add {
+    background: url('../images/b_add.png') center  no-repeat;
+}
+
+.copy {
+    background: url('../images/b_copy.png') center  no-repeat;
+    margin-left: 10px;
+}
+
+.update {
+    background: url('../images/b_update.png') center  no-repeat;
+    margin-left: 10px;
+}
+
+
+tr.delete {
+    background: #fbc6c6 !important;
+}
+
+tr.new {
+    background: #e8fbc8 !important;
+}
+
+td, th {
+    min-width: 16px;
+    min-height: 16px;
+    background-position: 50% 50% !important;
+}
+
+/* Tree */
+
+.tree {
+    padding: 0px;
+    margin: 0px 0px 0px 10px;
+}
+.tree li {
+    list-style: none;
+    margin: 5px;
+    padding: 5px;
+    padding-bottom: 0px;
+}
+
+.open, .close {
+    background: url('../images/tree-open.png') center no-repeat;
+    width: 16px;
+    height: 16px;
+}
+
+.up {
+    background: url('../images/up.png') center no-repeat;
+}
+
+.down {
+    background: url('../images/down.png') center no-repeat;
+}
+
+.close {
+    background: url('../images/tree-close.png') center no-repeat;
+}
+/**
+    Default table
+*/
+table {
+    border: 2px solid #a8a8a8;
+    border-spacing: 0;
+    table-layout: fixed;
+    overflow: hidden;
+    border-radius: 4px;
+}
+table.map {
+    border-style: none;
+    text-align: left;
+}
+
+table thead th,
+table tfoot th {
+    position: relative;
+    background-color: #eeeeee;
+    font-weight: bold;
+}
+table thead th {
+    border-bottom: 2px solid #a8a8a8;
+}
+table.map thead th {
+    font-size: 1.3em;
+    background-color: #fff;
+    border-bottom-style: none;
+}
+table tfoot th {
+    border-top: 2px solid #a8a8a8;
+}
+table:not(.hover-disable) thead th:hover:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    display: block;
+    height: 2000px;
+    width: 100%;
+    background-color: #eeeeee;
+}
+table td, table th {
+    padding: 3px 8px;
+}
+table.map td, table.map th{
+    padding: 3px 50px 3px 0;
+    vertical-align: top;
+}
+table:not(.hover-disable) tbody tr:hover {
+    background: #eeeeee !important;
+}
+
+table tr span.hidden {
+    display: inline;
+    visibility: hidden !important;
+}
+
+table tbody tr:hover span.hidden {
+    visibility: visible !important;
+}
+/*
+    Панель действий на странице
+*/
+.action-panel {
+    padding: 12px 0;
+}
+.action-panel .action-button {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #a8a8a8;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.action-panel .action-button + .action-button {
+    margin-left: 8px;
+}
+
+/* File editor */
+
+#file-editor-div {
+    background: #fff;
+    z-index: 10000;
+    min-width: 520px;
+    max-height: 300px;
+    overflow: auto;
+    overflow-x: visible !important;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 5px #ccc;
+}
+
+#file-editor-upload-div {
+    height: 25px;
+}
+
+#ajax-container {
+    border-top: 2px solid #eee;
+    margin-top: 20px;
+}
+
+.routes-editor .domains {
+    float:left;
+    width:240px;
+    padding-right:20px;
+}
+
+.routes-editor .domains ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+.routes-editor .domains ul li {
+    margin:0;
+    padding:5px;
+
+}
+.routes-editor .domains ul li.active {
+    background:#f5f5f5;
+}
+
+.routes-editor .domains ul li input {
+    width:200px;
+}
+
+.routes-editor .tables {
+    border-left:1px solid #ccc;
+    float:left;
+    padding-left:20px;
+}
+
+
+
+form fieldset { border:1px solid #eee; overflow:hidden; }
+
+form fieldset.closed { border:none; min-height:19px; padding-left:0; }
+
+form fieldset.fieldset-slide legend { border-bottom:1px dashed; cursor:pointer; }
+
+form p > label, form p > span { vertical-align:middle; display:inline-block; }
+form p > span { margin-left: 12px }
+form p > label { display: inline-block }
+
+
+/* Forms */
+
+form p > span input[type="text"], form p > span input[type="password"], form p > span select {
+    width:300px;
+}
+form p > span textarea {
+    width:500px;
+    height:50px;
+}
+
+table input[type="text"], table input[type="password"], table select {
+    width:100%;
+    box-sizing: border-box;
+}
+
+/* Отсортированная таблица */
+table.sort thead th:not(.not-sort) {
+    text-decoration:underline;
+    cursor:pointer;
+}
+table.sort thead th.down, table.sort thead th.up {
+    font-weight:bold;
+}
+table.sort thead th.up {
+    text-decoration: overline;
+}
+
+
+.ui-view_active {}
+.ui-view_unactive {
+    color: #a9a9a9;
+}
+.orange {
+    color: #FF9D3A;
+}
+
+#console{
+    position: fixed;
+    z-index: 100;
+    cursor: pointer;
+    top: 40px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 10px;
+    border: 1px solid #f00;
+    background-color: #f00;
+    color: #f00;
+    overflow: hidden;
+}
+#console.full{
+    width: 400px;
+    height: auto;
+    max-height: 500px;
+    background-color: #fff;
+    color: #000;
+    overflow-y: auto;
+}
+#console div{
+    margin-bottom: 3px;
+}
+.exist_error{
+    color: #f00;
+    padding: 0 5px;
+}
+.color-cyan{
+    color: #4285f4;
+}
+.filter-panel{
+    margin-bottom: 10px;
+}

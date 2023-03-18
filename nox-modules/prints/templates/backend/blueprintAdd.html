@@ -1,0 +1,113 @@
+{if $step === 2}
+<script type="text/javascript">
+    {if isset($makeUrls)}var makeUrls = {json_encode($makeUrls)};{end}
+        $(document).ready(function(){
+            $('.js-update_preview').on('change', function() {
+                var id = 'preview-id-' + this.getAttribute('data-id'),
+                    preview = document.getElementById(id);
+                if(!preview){
+                    preview = document.createElement('img');
+                    preview.id = id;
+                    document.getElementById('preview-cont').appendChild(preview);
+                }
+                preview.src = this.value;
+            });
+            $('.js-change-data-folder').on('change', function() {
+                if(!this.value) return false;
+                $('.js-change-data-folder-image').attr('data-folder', '/blueprints/{$category[url]}/' + makeUrls[this.value]);
+            });
+            $('.js-change-data-folder').trigger('change');
+        });
+</script>
+<style>
+    fieldset input, fieldset select {
+        max-width: 180px;
+    }
+</style>
+<form action="{$url}" method="POST">
+    <table class="w100p valign-middle hover-disable">
+        <thead>
+        <tr>
+            <th class="text-center" width="25%">Превью</th>
+            <th class="text-left" width="75%">Данные</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="preview-cont">
+                {if isset($ar[filename])}
+                    <img src="{$ar[filename]}" alt="" id="preview-id-{$ar[id]}">
+                {end}
+            </td>
+            <td>
+                {if isset($ar[name])}
+                    <h3>{if isset($ar[year])}{$ar[year]} {end}{$ar[name]}</h3>
+                {end}
+
+                <p>
+                    <label>Категория:</label>
+                    <span>
+                        <span class="bold">{$categories[$category[id]][name]}</span>
+                        (<a href="/administrator/prints/?section=blueprint&action=add">Сменить</a>)
+                    </span>
+                </p>
+
+                <fieldset>{$f}</fieldset>
+
+                <p>
+                    <label>Растр:</label>
+                        <span>
+                            <input type="text" name="new[filename]"  value="{if isset($ar[filename])}{htmlspecialchars($ar[filename])}{end}" data-folder="/blueprints/{$category[url]}" class="file-editor js-update_preview js-change-data-folder-image" data-id="{$ar[id]}">
+                        </span>
+                </p>
+                <p>
+                    <label>Название растра:</label>
+                    <span>
+                        <input type="text" name="new[name]" value="{if isset($ar[name])}{htmlspecialchars($ar[name])}{end}">
+                    </span>
+                </p>
+                <p>
+                    <label>Проекции:</label>
+                    <span>
+                        {Views::getViewsForAdmin(0)}
+                    </span>
+                </p>
+
+                <p>
+                    <span><input type="submit" name="submit" value="Сохранить"/></span>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+{else}
+<form method="get">
+    <table class="w100p valign-middle hover-disable">
+        <thead>
+            <tr>
+                <th class="text-center" width="25%">Превью</th>
+                <th class="text-left" width="75%">Данные</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    Выберите категорию
+                    {eval $attrs = ['style' => 'width: 200px;']}
+                    {noxForm::getSelect('category_id', false, $cats, '', '', $attrs)}
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <button>Далее</button>
+                    <input type="hidden" name="section" value="blueprint">
+                    <input type="hidden" name="action" value="add">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+{end}

@@ -1,0 +1,187 @@
+{if !isset($related)}
+<div class="pre-content">
+    <div class="container_12">
+        <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+            {foreach $breadcrumbs as $index=>$crumb}
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{$crumb[url]}" title="{$crumb[title]}" class="crumb"><span itemprop="name">{$crumb[name]}</span></a>
+                <meta itemprop="position" content="{$index+1}" />
+            </li>
+            {end}
+        </ol>
+        <h1 class="caption">{$caption}</h1>
+    </div>
+</div>
+<div class="content">
+    <div class="container_12">
+        <div class="grid_3 grid_first js_column-scroll">
+            <div id="sc" data-os="150" class="scroll-wrapper">
+                <form method="get" action="{$url}">
+                    <div class="search-form-block">
+                        <div class="form-item">
+                            <input class="input" name="q" placeholder="Search for blueprints" value="{htmlspecialchars($search[query])}" required>
+                        </div>
+                        <div class="form-item">
+                            <input class="btn invert-colors" type="submit" value="Search">
+                        </div>
+                    </div>
+                </form>
+                <p>&nbsp;</p>
+                <div data-ng-include="'/nox-themes/default/templates/app/need-request-2.html'"></div>
+                <div class="hr"></div>
+                {Prints::HTML_ICON_VECTOR}
+                <p>Purchase and download these ready editable premium blueprints and scalable drawings.</p>
+                <br/>
+                {Prints::HTML_ICON_PREPAY}
+                <p>These items are approved to be made after your pre-order. Make payment and get this vector
+                    blueprint in 1-{noxSystem::$prepayMaxDays} work days.</p>
+                <br/>
+                {Prints::HTML_ICON_VECTOR_REQUEST}
+                <p>Created by users, request means that we have not estimated price and feasibility to make it.
+                    Press <b>Want to buy vector</b> and we make a prepay quotation for you.</p>
+            </div>
+            &nbsp;
+        </div>
+        <div id="mc" class="grid_9">
+        {if isset($search[result])}
+            <h3>Search Results</h3>
+            <div style="font-size: 15px;">We found: {$search[setsTotal]} sets of blueprints
+                - {$search[vectorTotal]} vector blueprints
+                - {$search[rasterTotal]} free blueprints (<span id="_pageScrollTo">view free blueprints</span>).</div>
+            <br>
+            {if isset($hints)}
+            <div>Try separate words to find more results: {$hints}.</div>
+            <br>
+            {end}
+            {eval $i=0}
+            {if isset($search[sets]) && $search[sets]}
+            {foreach $search[sets] as $v}
+            <div class="grid_4{if $i++ % 3 === 0} grid_first{end}">
+                {printsSetModel::viewSetPreview($v)}
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            {end}
+            {end}
+            {if isset($search[rest]) && $search[rest]}
+            {foreach $search[rest] as $v}
+            <div class="grid_4{if $i++ % 3 === 0} grid_first{end}">
+                {printsVectorModel::viewVectorPreview($v)}
+                <p style="padding-bottom: 6px">&nbsp;</p>
+            </div>
+            {end}
+            {end}
+            <div class="clearfix"></div>
+            <h3 id="pageScrollTo" class="inline-block">All search results - {$count} items</h3>
+            <div>This list includes all items: free bitmap blueprints, requested items, prepay and
+                ready vector blueprints.</div>
+            {$pager}
+            <table>
+                <thead>
+                <tr>
+                    <th class="w16">&nbsp;</th>
+                    <th class="text-left">Model</th>
+                    <th class="text-center" style="width: 60px;">Views</th>
+                </tr>
+                </thead>
+                <tbody class="pointer">
+                {foreach $search[result] as $ar}
+                <tr>
+                    <td class="copyright"></td>
+                    <td>
+                        <a class="link__color-default link__undecoration display-block" href="{$ar[url]}" title="{$ar[full_name]} {$ar[seo]}">
+                            {$ar[full_name]}&nbsp;{$ar[tag]}
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        {Views::getViewsInHtml($ar[views])}
+                    </td>
+                </tr>
+                {end}
+                </tbody>
+            </table>
+            {$pager}
+            <br>
+            <h3>Search Tips</h3>
+        {else}
+            <h3>Your search "{$_GET[q]}" didn't match any blueprints.</h3>
+            {if isset($hints)}
+            <div>Try separate words to find more results: {$hints}.</div>
+            {end}
+            <br>
+        {end}
+        <div>
+            Please write a vehicle make or brand name (e.g. <a href="/search?q=Ford">Ford</a>)
+            or just a model name (e.g. <a href="/search?q=Transit">Transit</a>)
+            or both make and model name (e.g. <a href="/search?q=Volkswagen+Golf">Volkswagen Golf</a>).
+            For better search results please follow these simple rules:
+            <div></div><br>
+            <ul>
+                <li>● Check if the brand or model name is written correct</li>
+                <li>● Do not specify your search with version (such as GT or Mk.2 etc)</li>
+                <li>● Do not specify a year (such as 68 Mustang) - just write Mustang</li>
+                <li>● Please do not write words such as blueprints, drawings, templates, PDF etc.</li>
+            </ul>
+        </div>
+        {if isset($search[error])}
+            <br>
+            <h3>Search Results</h3>
+            <div>{$search[error]}</div>
+        {end}
+        </div>
+    </div>
+</div>
+
+{else}
+<div class="pre-content">
+    <div class="container_12">
+        <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumbs">
+            {foreach $breadcrumbs as $index=>$crumb}
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{$crumb[url]}" title="{$crumb[title]}" class="crumb"><span itemprop="name">{$crumb[name]}</span></a>
+                <meta itemprop="position" content="{$index+1}" />
+            </li>
+            {end}
+        </ol>
+        <h1 class="caption">{$caption}</h1>
+        <div class="w50p">
+            Please write a vehicle make or brand name (e.g. <a href="/search?q=Ford">Ford</a>)
+            or just a model name (e.g. <a href="/search?q=Transit">Transit</a>)
+            or both make and model name (e.g. <a href="/search?q=Volkswagen+Golf">Volkswagen Golf</a>).
+            For better search results please follow these simple rules:
+            <div></div><br>
+            <ul>
+                <li>● Do not specify your search with version (such as GT or Mk.2 etc)</li>
+                <li>● Do not specify a year (such as 68 Mustang) - just write Mustang</li>
+                <li>● Please do not write words such as blueprints, drawings, templates, PDF etc.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <br>
+    <div class="container_12">
+        <div style="margin: 0 auto; float: none; display: block" class="grid_5 grid_first">
+            <form method="get" action="{$url}">
+                <div class="search-form-block">
+                    <div class="form-item">
+                        <input class="input" name="q" placeholder="Search blueprints" value="{if isset($search)}{htmlspecialchars($search[query])}{end}" required>
+                    </div>
+                    <div class="form-item text-center">
+                        <input class="btn hover" type="submit" value="Search" style="padding: 0 30px;">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container_12">
+        <div class="hr"></div>
+        <div class="fakeh1 text-center" style="margin-bottom: 16px;">Last searches</div>
+        {foreach $related as $i=>$v}
+        <div class="grid_3{if $i === 0} grid_first{end}">
+            {printsVectorModel::viewVectorPreview($v)}
+        </div>
+        {end}
+    </div>
+</div>
+{end}

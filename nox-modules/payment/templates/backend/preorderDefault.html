@@ -1,0 +1,65 @@
+<div></div>
+<table id="table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Коммент</th>
+            <th>Предзаказ</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $res as $ar}
+        <? $user = @$users[$ar['user_id']]; ?>
+        <tr>
+            <td>{noxDate::toDateTime($ar[datetime])}</td>
+            <td>
+                {eval $comment = $vectors[$ar[purchase_id]][comment]}
+                {if $admin}
+                <input id="{$vectors[$ar[purchase_id]][id]}" value="{$comment}" fix-value="{$comment}">
+                {else}
+                {$comment}
+                {end}
+            </td>
+            <td>
+                <span class="{$ar[state]}">{$ar[option]} {$ar[purchase_name]}</span>
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=view&id={$vectors[$ar[purchase_id]][id]}" target="_blank">view</a>
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=edit&id={$vectors[$ar[purchase_id]][id]}">edit</a>
+                {if isset($ar[download])}
+                &nbsp;&nbsp;<a href="/download/vector/{$vectors[$ar[purchase_id]][id]}">download</a>
+                {end}
+                {if isset($ar[complete])}
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=ready&id={$vectors[$ar[purchase_id]][id]}">ready</a>
+                {elseif isset($ar[top_ready])}
+                &nbsp;&nbsp;<a href="/administrator/prints/?section=vector&action=ready&id={$vectors[$ar[purchase_id]][id]}&option=top">ready</a>
+                {end}
+            </td>
+        </tr>
+        {end}
+    </tbody>
+</table>
+<script>
+    let table = document.getElementById('table');
+    table.addEventListener('keyup', function (e) {
+        (e.keyCode === 13) && e.target.id && changeComment(e.target);
+    });
+    function changeComment(input) {
+        if(!input.id || (input.value === input.getAttribute('fix-value'))) return;
+        input.setAttribute('disabled', 'true');
+        upData(
+            'GET',
+            '/administrator/prints/?section=vector&action=comment&id=' + input.id + '&comment=' + encodeURIComponent(input.value),
+            null,
+            function () {
+                input.setAttribute('fix-value', input.value);
+                complete();
+            },
+            function () {
+                input.value = input.getAttribute('fix-value');
+                complete();
+            }
+        );
+        function complete() {
+            input.removeAttribute('disabled');
+        }
+    }
+</script>

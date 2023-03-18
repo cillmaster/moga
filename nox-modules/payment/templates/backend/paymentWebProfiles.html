@@ -1,0 +1,29 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Landing page type</th>
+            <th>Allow note</th>
+            <th>No shipping</th>
+            <th>Brand name</th>
+            <th>Locale code</th>
+            <th>Logo image</th>
+        </tr>
+    </thead>
+    {foreach $profiles as $profile}
+    <tr>
+        <td><?=$profile->getId()?></td>
+        <td><?=$profile->getName()?></td>
+
+        <td><?=$profile->getFlowConfig()->getLandingPageType()?></td>
+
+        <td><?=$profile->getInputFields()->getAllowNote()?></td>
+        <td><?=$profile->getInputFields()->getNoShipping()?></td>
+
+        <td><?=$profile->getPresentation()->getBrandName()?></td>
+        <td><?=$profile->getPresentation()->getLocaleCode()?></td>
+        <td><img src="<?=$profile->getPresentation()->getLogoImage()?>" alt="<?=$profile->getPresentation()->getLogoImage()?>"></td>
+    </tr>
+    {end}
+</table>

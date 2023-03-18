@@ -1,0 +1,116 @@
+html, body, div, span, p, a, img, ul, li, form, label
+  margin: 0
+  padding: 0
+  border: 0
+  font: inherit
+  font-size: 100%
+  vertical-align: baseline
+html, body
+  height: 100%
+body
+  word-wrap: break-word
+  background: _white_color
+  overflow-y: scroll
+html
+  box-sizing: border-box
+  overflow-x: hidden
+*, *:before, *:after
+  box-sizing: inherit
+body, select, textarea, button, input
+  font: 14px/1.45 Helvetica, Arial, sans-serif
+  color: _dark_color
+  outline: none
+article,aside,details,footer,header,main,menu,nav,section,summary
+  display: block
+h1
+  font-size 36px
+h2
+  font-size 30px
+h3
+  font-size 24px
+h4
+  font-size 20px
+h5
+  font-size 18px
+h6
+  font-size 16px
+h1,h2,h3,h4,h5,h6
+  font-family "Segoe UI",Arial,sans-serif
+  font-weight 400
+  margin 0 !important
+ul
+  list-style: none
+a
+  color inherit
+  background-color: transparent
+  outline: none
+  text-decoration: none
+  &:active
+  &:hover
+    outline-width: 0
+small
+  font-size: 80%
+sub,sup
+  font-size: 75%
+  line-height: 0
+  position: relative
+  vertical-align: baseline
+sub
+  bottom: -0.25em
+sup
+  top: -0.5em
+img
+  border-style: none
+code,kbd,pre,samp
+  font-family: monospace, monospace
+  font-size: 1em
+hr
+  box-sizing: content-box
+  height: 0
+  overflow: visible
+button,input,select,textarea,.input
+  font: inherit
+  margin: 0
+input,select,textarea,.input
+  padding: 8px 0;
+  display block
+  border none
+  border-bottom 1px solid _light_color
+  width 100%
+optgroup
+  font-weight bold
+button,input
+  overflow: visible
+button,select
+  text-transform: none
+button,html [type=button],[type=reset],[type=submit]
+  -webkit-appearance: button
+button::-moz-focus-inner, [type=button]::-moz-focus-inner, [type=reset]::-moz-focus-inner, [type=submit]::-moz-focus-inner
+  border-style: none
+  padding: 0
+button:-moz-focusring, [type=button]:-moz-focusring, [type=reset]:-moz-focusring, [type=submit]:-moz-focusring
+  outline: 1px dotted ButtonText
+legend
+  color: inherit
+  display: table
+  max-width: 100%
+  padding: 0
+  white-space: normal
+textarea
+  overflow: auto
+[type=checkbox],[type=radio]
+  padding 0
+[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button
+  height: auto
+[type=search]
+  -webkit-appearance: textfield
+  outline-offset: -2px
+[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration
+  -webkit-appearance: none
+::-webkit-input-placeholder
+  color: inherit
+  opacity: 0.5
+label:not([for])
+  color _light_color
+  span
+    color _light_warn_color

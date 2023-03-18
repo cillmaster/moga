@@ -1,0 +1,87 @@
+<div style="font: 11pt Tahoma, Verdana, Segoe, sans-serif; padding: 32px; background-color: #eee; text-align: center;">
+    <div style="padding: 32px; max-width: 600px; background-color: #f7f7f7;">
+        <img src="https://getoutlines.com/nox-themes/default/images/outlines-logo.png"
+             width="130" height="23" style="margin-bottom: 32px;">
+        <div style="font-weight: bold">INVOICE</div>
+        <br>
+        <div>Invoice Number / Receipt ID: {$data[num]}</div>
+        <div>Date of Issue: {$data[dt]} (UTC)</div>
+        <div>Payment Due On: {$data[dt]} (UTC)</div>
+        <div style="background-color: #fff; padding: 16px; margin: 32px 0 8px;">
+            <table width="100%" style="text-align: left; border-collapse: collapse; border: 1px solid #000;">
+                <tbody>
+                <tr>
+                    <td style="font: 11pt Tahoma, Verdana, Segoe, sans-serif; border: 1px solid #000; padding: 16px; vertical-align: top;">
+                        <div>From:</div>
+                        <div>Ilia Afanasev</div>
+                        <div>pay&#8291;@&#8291;getoutlines&#8291;.&#8291;com</div>
+                        <div>Samara, Russia</div>
+                    </td>
+                    <td style="font: 11pt Tahoma, Verdana, Segoe, sans-serif; border: 1px solid #000; padding: 16px; vertical-align: top;">
+                        <div>For:</div>
+                        <div>{$data[user][name]}</div>
+                        <br>
+                        <div>Address:</div>
+                        <div>{$data[user][email]}</div>
+                        <br>
+                        <div>VAT Number: -</div>
+                        <br>
+                        <div>Payment methods accepted:</div>
+                        <div>Paypal or Debit/Credit Card</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="background-color: #fff; padding: 16px; margin: 8px 0 32px;">
+            <table width="100%" style="border-collapse: collapse; border: 1px solid #000; margin-bottom: 8px;">
+                <tbody>
+                <tr>
+                    <td style="text-align: left; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>Items</div>
+                    </td>
+                    <td style="text-align: center; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>Qty</div>
+                    </td>
+                    <td style="text-align: center; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>Price</div>
+                    </td>
+                </tr>
+                {foreach $data[items] as $item}
+                <tr>
+                    <td style="text-align: left; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>{$item[name]}</div>
+                    </td>
+                    <td style="text-align: center; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>{$item[qty]}</div>
+                    </td>
+                    <td style="text-align: right; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>${$item[price]}</div>
+                    </td>
+                </tr>
+                {end}
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div></div>
+                    </td>
+                    <td style="text-align: right; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div>Total</div>
+                    </td>
+                    <td style="text-align: right; border: 1px solid #000; padding: 8px 16px; font: 11pt Tahoma, Verdana, Segoe, sans-serif; vertical-align: top;">
+                        <div style="font-weight: bold;">${$data[total]}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="font-size: 9pt; color: #a4a4a4;">Prices shown in United Stated Dollars ($).</div>
+        </div>
+        <div>If you have any questions <a href="mailto:hello@getoutlines.com?subject=Purchase Question"
+         target="_blank">contact us</a>.</div>
+        <br>
+        <div>Thanks, Outlines Team</div>
+        <br>
+        <div style="font-size: 9pt; color: #a4a4a4;">
+            <div>© 2006 - <?=date('Y')?> Outlines. All rights reserved.</div>
+        </div>
+    </div>
+</div>

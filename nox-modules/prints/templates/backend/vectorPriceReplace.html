@@ -1,0 +1,23 @@
+<form action="{$url}" method="POST">
+    {if isset($r)}
+    <p>
+        <label>Было изменено {$r} строк с ценой {$_POST[p1]} на цену {$_POST[p2]}</label>
+    </p>
+    {end}
+    <p>
+        <label>Цена для замены:</label>
+        <span>
+            <input type="text" name="p1" value="">
+        </span>
+    </p>
+    <p>
+        <label>Новая цена:</label>
+        <span>
+            <input type="text" name="p2" value="">
+        </span>
+    </p>
+
+    <p>
+        <span><input type="submit" name="submit" value="Сохранить"/></span>
+    </p>
+</form>

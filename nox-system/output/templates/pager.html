@@ -1,0 +1,14 @@
+{if $pages > 1}
+    <div class="pages">
+        <span></span>
+        {foreach $res as $ar}
+            {if $ar[type] == 'link'}
+                {$ar[link]}
+            {end}
+            {if $ar[type] == 'delimiter'}...{end}
+            {if $ar[type] == 'active'}
+                <span class="page active">{$ar[val]}</span>
+            {end}
+        {end}
+    </div>
+{end}

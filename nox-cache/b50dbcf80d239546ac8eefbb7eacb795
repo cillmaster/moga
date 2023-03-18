@@ -1,0 +1,5 @@
+s:243:"<option value="">Make</option>
+<?php if (isset($res) && $res) foreach ($res as $ar) { ?>
+    <option value="<?php echo @$ar['id']; ?>"<?php if (@($ar['id'] == $selected)) { ?> selected<?php } ?>><?php echo @$ar['name']; ?></option>
+<?php } ?>
+";
