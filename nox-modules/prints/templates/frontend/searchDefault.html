@@ -72,35 +72,7 @@
             {end}
             <div class="clearfix"></div>
             <h3 id="pageScrollTo" class="inline-block">All search results - {$count} items</h3>
-            <div>This list includes all items: free bitmap blueprints, requested items, prepay and
-                ready vector blueprints.</div>
-            {$pager}
-            <table>
-                <thead>
-                <tr>
-                    <th class="w16">&nbsp;</th>
-                    <th class="text-left">Model</th>
-                    <th class="text-center" style="width: 60px;">Views</th>
-                </tr>
-                </thead>
-                <tbody class="pointer">
-                {foreach $search[result] as $ar}
-                <tr>
-                    <td class="copyright"></td>
-                    <td>
-                        <a class="link__color-default link__undecoration display-block" href="{$ar[url]}" title="{$ar[full_name]} {$ar[seo]}">
-                            {$ar[full_name]}&nbsp;{$ar[tag]}
-                        </a>
-                    </td>
-                    <td class="text-center">
-                        {Views::getViewsInHtml($ar[views])}
-                    </td>
-                </tr>
-                {end}
-                </tbody>
-            </table>
-            {$pager}
-            <br>
+
             <h3>Search Tips</h3>
         {else}
             <h3>Your search "{$_GET[q]}" didn't match any blueprints.</h3>
