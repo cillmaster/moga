@@ -206,7 +206,7 @@ class printsSearchModel extends noxModel {
 //                    . ' OPTION max_matches = ' . $max)
 //                    ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
 //                    ->executeBatch();
-//var_dump();
+
                 $response['total'] = $response['setsTotal'];//$query[1][1]['Value'];
 
                 foreach ($query[0] as &$ar){
