@@ -26,6 +26,7 @@ class printsSearchDefaultAction extends noxThemeAction
             $onPage = 100;
             $this->model = new printsSearchModel();
             $search = $this->model->searchSphinx2($_GET['q'], false, ($page - 1) * $onPage, $onPage);
+
             $this->addVar('pager', (new kafPager('pager2.html'))->create2($search['total'], $onPage, 9, $page));
             $this->addVar('count', $search['total']);
             foreach ($search['sets'] as &$row) {
@@ -37,6 +38,7 @@ class printsSearchDefaultAction extends noxThemeAction
             }
             $this->addVar('search', $search);
             $this->title = $this->caption = 'Search Results for "' . ucwords($_GET['q']) . '"';
+
             if(sizeof($words = explode(' ', $_GET['q'])) > 1){
                 foreach ($words as $word){
                     if(!empty($word)){
@@ -47,6 +49,7 @@ class printsSearchDefaultAction extends noxThemeAction
                     $this->addVar('hints', join(' or ', $hints));
                 }
             }
+
         }
         else {
             $this->title =  'Search car blueprints on online drawing database of cars';
@@ -59,3 +62,4 @@ class printsSearchDefaultAction extends noxThemeAction
         }
     }
 }
+
