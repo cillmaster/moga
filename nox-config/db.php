@@ -3,9 +3,9 @@ return array(
     'default' =>
     array(
         'type'     => 'MySqli',
-        'db'       => 'admin_default',
+        'db'       => 'admin_moga',
         'login'    => 'admin_moga',
-        'password' => 'msq0WuAGuy',
+        'password' => 'Moga79$',
         'host'     => 'localhost'
     )
 )
