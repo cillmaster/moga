@@ -154,6 +154,7 @@ class printsSearchModel extends noxModel {
             $params['name'] = $query;
         }
 
+
         if(isset($params['name']) && strlen($params['name']) < 2) {
             $response['error'] = 'Enter 2 or more characters to search. Otherwise use <a href="/blueprints">blueprint catalogue</a>';
         }
@@ -187,24 +188,32 @@ class printsSearchModel extends noxModel {
                 $query = SphinxQL::create($conn)->query('SELECT `id` FROM vector_' . SPHINX_MODE . ' WHERE ' . $where . ' LIMIT 10000 OPTION max_matches = 10000')
                     ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
                     ->executeBatch();
+
                 $idArr = [];
                 foreach ($query[0] as $item){
                     $idArr[] = $item['id'];
                 }
+
                 $map = (new printsSetModel())->getSetsForVectors($idArr);
+
                 $response = array_merge($response, $map);
                 $response['vectorTotal'] = count($idArr);
 
                 $max = $start + $size;
-                $query = SphinxQL::create($conn)->query('SELECT * FROM brv_' . SPHINX_MODE . ' WHERE '
-                    . $where . ' ORDER BY `sort_name` ASC, `type` ASC LIMIT ' . $start . ', ' . $size
-                    . ' OPTION max_matches = ' . $max)
-                    ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
-                    ->executeBatch();
-                $response['total'] = $query[1][1]['Value'];
+
+//                $query = SphinxQL::create($conn)->query('SELECT * FROM brv_' . SPHINX_MODE . ' WHERE '
+//                    . $where . ' ORDER BY `sort_name` ASC, `type` ASC LIMIT ' . $start . ', ' . $size
+//                    . ' OPTION max_matches = ' . $max)
+//                    ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
+//                    ->executeBatch();
+
+                $response['total'] = $response['setsTotal'];//$query[1][1]['Value'];
+
                 foreach ($query[0] as &$ar){
+
                     $ar['id'] = floor($ar['id'] / 10);
-                    switch ($ar['type']){
+                    /*
+                     switch ($ar['type']){
                         case 0:
                             $ar['type'] = Prints::VECTOR;
                             $ar['bold'] = true;
@@ -230,19 +239,22 @@ class printsSearchModel extends noxModel {
                             $ar['seo'] = 'blueprints free';
                             break;
                     }
+
                     $ar['url'] = Prints::createUrlForItem($ar, $ar['type']);
+                    */
                 }
                 $response['result'] = $query[0];
 
-                $query = SphinxQL::create($conn)->query('SELECT * FROM blueprint_' . SPHINX_MODE . ' WHERE '
-                    . $where . ' OPTION max_matches = 10000')
-                    ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
-                    ->executeBatch();
-                $response['rasterTotal'] = $query[1][1]['Value'];
+//                $query = SphinxQL::create($conn)->query('SELECT * FROM blueprint_' . SPHINX_MODE . ' WHERE '
+//                    . $where . ' OPTION max_matches = 10000')
+//                    ->enqueue(SphinxQL::create($conn)->query('SHOW META'))
+//                    ->executeBatch();
+                $response['rasterTotal'] = 0;//$query[1][1]['Value'];
             }else{
                 $response['error'] = 'Empty request!';
             }
         }
+
         return $response;
     }
 
